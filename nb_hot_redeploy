@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+while inotifywait -e modify $1; do
+    echo "Changes to "$1  "Coming in 🔥redeploy"
+    nbdev_build_lib --fname $1
+done
