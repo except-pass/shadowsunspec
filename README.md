@@ -6,6 +6,10 @@ This document explains how to serialize data from a sunspec-compliant battery en
 
 > ❗ We're using "serialize" here to mean "json encode".  It has nothing to do with a physical serial connection.
 
+## How to Clone
+
+This repo depends on [pysunspec](https://github.com/sunspec/pysunspec).  If you want to be able to run the examples you need all the submodules.  Make sure to clone with the `--recursive` flag.
+
 ## Background
 
 ### Audience
