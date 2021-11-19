@@ -20,7 +20,8 @@ clean:
 
 env:
 	virtualenv .venv -p python3.8 --prompt "[$(REPO)] "
-	. .venv/bin/activate && pip install jupyter jupyterlab nbdev
+	. .venv/bin/activate && pip install "nbconvert<6" jupyter jupyterlab nbdev
+	. .venv/bin/activate && pip install -e pysunspec/
 	. .venv/bin/activate && pip install -e .
 ifdef WIDGET
 	. .venv/bin/activate && (jupyter labextension check @jupyter-widgets/jupyterlab-manager ||  jupyter labextension install @jupyter-widgets/jupyterlab-manager)

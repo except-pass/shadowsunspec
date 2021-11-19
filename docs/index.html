@@ -1,13 +1,13 @@
 ---
 
-title: Talos Repo Template
+title: Shadow-sunspec
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Starting a new python project?  Start with this template."
-description: "Starting a new python project?  Start with this template."
+summary: "Serializing Sunspec Models for AWS IoT Device Shadow"
+description: "Serializing Sunspec Models for AWS IoT Device Shadow"
 nb_path: "nbs/index.ipynb"
 ---
 <!--
@@ -31,16 +31,965 @@ nb_path: "nbs/index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Install">Install<a class="anchor-link" href="#Install"> </a></h2><div class="highlight"><pre><span></span>git clone https://github.com/talosiot-will/repo_template.git
-mv repo_template <span class="nv">$new_repo_name</span>
-<span class="nb">cd</span> <span class="nv">$new_repo_name</span>
-rm -rf .git
-</pre></div>
-<p>Then edit the <code>settings.ini</code></p>
+<p>This document explains how to serialize data from a sunspec-compliant battery energy storage system.  This serialized data can then be sent over the internet (e.g. via MQTT) and interpreted by iot tools such as AWS Device Shadow.</p>
 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>❗ We're using "serialize" here to mean "json encode".  It has nothing to do with a physical serial connection.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Background">Background<a class="anchor-link" href="#Background"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Audience">Audience<a class="anchor-link" href="#Audience"> </a></h3><p>The audience for this document is software developers working on cloud systems, embedded system designers working on either the firmware or the IoT hardware, and electrical engineers who are familiar with modbus communications but may be less familiar with software.  Because of the diverse audience, there may be parts or whole sections that seem to overexplain simple concepts.</p>
+<h3 id="Sunspec">Sunspec<a class="anchor-link" href="#Sunspec"> </a></h3><p><a href="https://sunspec.org/sunspec-modbus-specifications/">Sunspec Modbus</a> is an "open communication standard that specifies common parameters and settings for monitoring and controlling Distributed Energy Resource (DER) systems.  SunSpec Modbus utilizes SunSpec Information Models".</p>
+<p>But Modbus, even Modbus TCP, is not a good choice for an IoT platform.  It lacks many features that are necessary for a scalable IoT solution such as</p>
+<ul>
+<li>security</li>
+<li>device management</li>
+<li>analytics</li>
+<li>interoperability with cloud services</li>
+</ul>
+<p>To get these advantages we use the AWS IoT platform.  One powerful feature is the device shadow.  "<a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html">Shadows can make a device’s state available to apps and other services whether the device is connected to AWS IoT or not.</a>"</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Architecture">Architecture<a class="anchor-link" href="#Architecture"> </a></h3><p><a href="https://hackmd.io/_whLhpOtSc2Mpk__B7Arqg">Please see the system overview diagram</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Shadow Sunspec is designed to be used to communicate the device state to the IoT Core device shadow service.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Design-Goals">Design Goals<a class="anchor-link" href="#Design-Goals"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Mirror-sunspec">Mirror sunspec<a class="anchor-link" href="#Mirror-sunspec"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One goal of this specification is to stay as close as possible to the data organization in sunspec.  <a href="https://github.com/sunspec/pysunspec">The python implementation of sunspec</a> is used as a reference.  One thing we change is where the python implementation uses lists.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Avoiding-Arrays">Avoiding Arrays<a class="anchor-link" href="#Avoiding-Arrays"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One goal of this specification is to avoid the use of any arrays (lists) in the serialized form of the data.  This is due to how <a href="https://docs.aws.amazon.com/iot/latest/developerguide/device-shadow-data-flow.html">AWS device shadow updates</a> handle arrays. An update will only change the values that are given.  For large device shaodws this avoids having to resend the entire document.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For example, the shadow</p>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">98</span>
+        <span class="p">}</span>
+</pre></div>
+<p>could be updated with</p>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">97</span>
+        <span class="p">}</span>
+</pre></div>
+<p>and the result is</p>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">97</span>
+        <span class="p">}</span>
+</pre></div>
+<p>Everything in <code>cells.0</code> is unchanged.  Only <code>cells.1</code> is changed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>However if the device shadow instead was</p>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">98</span>
+        <span class="p">}</span>
+</pre></div>
+<p>we would have to send the information in <code>cells</code> because the entire value of the <code>cells</code> is overwritten with each update.  If this cells array were long and each entry had many points, this represents a lot of extra data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Because a full sunspec implementation can describe a potentially large number of datapoints it is a design goal to minimize the amount of redundant data that must be sent.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Only-include-essential-information">Only include essential information<a class="anchor-link" href="#Only-include-essential-information"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Only serialize data the essential data.  Do not include metadata or other static values in the serialization.   For example, the full specification for cell voltage is</p>
+<table>
+<thead><tr>
+<th style="text-align:center">Address</th>
+<th style="text-align:center">Name</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Scale Factor</th>
+<th style="text-align:center">Units</th>
+<th>RW Access</th>
+<th style="text-align:center">Mandatory</th>
+<th>Static</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">uint16</td>
+<td style="text-align:center">V_SF</td>
+<td style="text-align:center">V</td>
+<td></td>
+<td style="text-align:center">M</td>
+<td></td>
+<td>Module Voltage</td>
+<td>Voltage of the   module.</td>
+</tr>
+</tbody>
+</table>
+<p>Of these values, none of them change over time.  Only the actual value of the cell voltage changes.  So there is no reason to include all this metadata in our serialization.  It can be shortened to</p>
+<p><code>{"V": 32}</code></p>
+<p>In the case where the raw value of the modbus register reads 32.  The rest of the metadata can be looked up as needed.  This includes the scaling factor which is generally static.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Format">Data Format<a class="anchor-link" href="#Data-Format"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="SunSpec-Device-Information-Model-Specificiation-V1-0.pdf">The sunspec information model</a> gives a description of how data in sunspec is organized  (page 15).  A device is composed of one or more models.  Each model has one or more point groups.  Each point group has one or more points.  It is possible for a model to appear more than one time.  For example, a battery bank (model 802) can have many battery strings (model 803).  In this case, model 802 would be implemented once, and model 803 would be implemented once for each battery string.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>❗ The above uses "string" in the battery sense of the word, and not the computer science datatype of a character sequece.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/shadowsunspec/sunspec_data_hierarchy.jpg" alt="Data Hierarchy" title="Data Hierarchy"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To mirror this format, serialize data using these rules</p>
+<ul>
+<li>the highest level data structure is a dictionary</li>
+<li>start with the keyword <code>models</code></li>
+<li>replace lists with a dictionary, where the keys are the list's index (see the example above).</li>
+<li>point groups can be either <code>fixed</code> or <code>repeating</code>.  Differentiate them using those keywords.</li>
+<li>The keyword for points is the point's Name.</li>
+<li>The value for points is the actual (unscaled) value stored in the modbus register.</li>
+<li>Enums should report their integer value.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;sunspec&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
+                <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
+                <span class="err">&lt;...&gt;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>A <code>Model</code> is made up of one or more point groups.  There will always be a fixed point group.  There will then be zero or more repeating point groups.  We can serialize a <code>Model</code> as</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="err">Model</span> <span class="err">ID</span> <span class="kc">nu</span><span class="err">mber</span><span class="p">,</span>
+    <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
+                <span class="err">&lt;...&gt;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> 
+            <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
+                <span class="err">&lt;...&gt;</span>
+               <span class="p">},</span>
+            <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
+               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
+                <span class="err">&lt;...&gt;</span>
+               <span class="p">},</span>
+            <span class="err">&lt;...&gt;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example-Implementation">Example Implementation<a class="anchor-link" href="#Example-Implementation"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Simple-Example">Simple Example<a class="anchor-link" href="#Simple-Example"> </a></h3><p>This example covers a fictional energy storage system.  In this example implementation we won't include all the points specified in the sunspec.  We will try to include enough different data types so that this example could be expanded.</p>
+<p>Sunspec defines the following levels of organizations for battery cells.</p>
+<ul>
+<li>Cell: A single energy or charge-storing unit</li>
+<li>Module: A single enclosed unit consisting of one or more cells</li>
+<li>String: One or more battery modules connected in series</li>
+<li>Bank: One or more battery strings usually connected in parallel</li>
+</ul>
+<p>This simple example considers a battery bank that has 1 battery string.  The string is made up of two battery modules, and each module has 3 battery cells.</p>
+
+<pre><code>bank
+├── string 1
+│   ├── module 1-1
+│   │   ├── cell 1-1-1
+│   │   ├── cell 1-1-2
+│   │   ├── cell 1-1-3
+│   ├── module 1-2
+│   │   ├── cell 1-2-1
+│   │   ├── cell 1-2-2
+│   │   ├── cell 1-2-3</code></pre>
+<p>These are the relevant sunspec models</p>
+<table>
+<thead><tr>
+<th>Model ID</th>
+<th>Model Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802</td>
+<td>Battery Base Model</td>
+</tr>
+<tr>
+<td>803</td>
+<td>Lithium-Ion Battery Bank Model</td>
+</tr>
+<tr>
+<td>804</td>
+<td>Lithium-Ion String Model</td>
+</tr>
+<tr>
+<td>805</td>
+<td>Lithium-Ion Module Model</td>
+</tr>
+</tbody>
+</table>
+<p>The cells are a repeating point group within the module model.  For brevity sake we'll only cover a subset of the points.</p>
+<p>In this case we only need model <code>802</code> to cover the whole bank, and we need one model <code>805</code> for each module.  The other models are redundant and will not be included.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;sunspec&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">802</span><span class="p">,</span>
+      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;AHRtg&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">97</span><span class="p">,</span>
+        <span class="nt">&quot;ChaSt&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;ReqW&quot;</span><span class="p">:</span> <span class="mi">-300</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span>
+      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">98</span><span class="p">,</span>
+        <span class="nt">&quot;NCell&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;SN&quot;</span><span class="p">:</span> <span class="s2">&quot;ABC123&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span>
+      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">96</span><span class="p">,</span>
+        <span class="nt">&quot;NCell&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;SN&quot;</span><span class="p">:</span> <span class="s2">&quot;ABC124&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="eVault">eVault<a class="anchor-link" href="#eVault"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The eVault product has 16 cells, 1 module, and 1 string.  We include model</p>
+<ul>
+<li>802: required of battery banks</li>
+<li>803: contains summary level data on the string in the repeating block.  That summary data has the Contactor Status, which is important to Fortress Engineers.</li>
+<li>805: Module and cell level data.</li>
+</ul>
+<p>We can generate the full shadow sunspec along with datatypes.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">shadowsunspec.factory</span> <span class="kn">import</span> <span class="n">assemble</span><span class="p">,</span> <span class="n">ShadowSunspecEncoder</span>
+<span class="n">example_device</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">802</span><span class="p">},</span> 
+        <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">803</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span> <span class="s1">&#39;repeating&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">}])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">example_device</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ShadowSunspecEncoder</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+  &#34;sunspec&#34;: {
+    &#34;0&#34;: {
+      &#34;fixed&#34;: {
+        &#34;AHRtg&#34;: &#34;uint16&#34;,
+        &#34;WHRtg&#34;: &#34;uint16&#34;,
+        &#34;WChaRteMax&#34;: &#34;uint16&#34;,
+        &#34;WDisChaRteMax&#34;: &#34;uint16&#34;,
+        &#34;DisChaRte&#34;: &#34;uint16&#34;,
+        &#34;SoCMax&#34;: &#34;uint16&#34;,
+        &#34;SoCMin&#34;: &#34;uint16&#34;,
+        &#34;SocRsvMax&#34;: &#34;uint16&#34;,
+        &#34;SoCRsvMin&#34;: &#34;uint16&#34;,
+        &#34;SoC&#34;: &#34;uint16&#34;,
+        &#34;DoD&#34;: &#34;uint16&#34;,
+        &#34;SoH&#34;: &#34;uint16&#34;,
+        &#34;NCyc&#34;: &#34;uint32&#34;,
+        &#34;ChaSt&#34;: &#34;enum16&#34;,
+        &#34;LocRemCtl&#34;: &#34;enum16&#34;,
+        &#34;Hb&#34;: &#34;uint16&#34;,
+        &#34;CtrlHb&#34;: &#34;uint16&#34;,
+        &#34;AlmRst&#34;: &#34;uint16&#34;,
+        &#34;Typ&#34;: &#34;enum16&#34;,
+        &#34;State&#34;: &#34;enum16&#34;,
+        &#34;StateVnd&#34;: &#34;enum16&#34;,
+        &#34;WarrDt&#34;: &#34;uint32&#34;,
+        &#34;Evt1&#34;: &#34;bitfield32&#34;,
+        &#34;Evt2&#34;: &#34;bitfield32&#34;,
+        &#34;EvtVnd1&#34;: &#34;bitfield32&#34;,
+        &#34;EvtVnd2&#34;: &#34;bitfield32&#34;,
+        &#34;V&#34;: &#34;uint16&#34;,
+        &#34;VMax&#34;: &#34;uint16&#34;,
+        &#34;VMin&#34;: &#34;uint16&#34;,
+        &#34;CellVMax&#34;: &#34;uint16&#34;,
+        &#34;CellVMaxStr&#34;: &#34;uint16&#34;,
+        &#34;CellVMaxMod&#34;: &#34;uint16&#34;,
+        &#34;CellVMin&#34;: &#34;uint16&#34;,
+        &#34;CellVMinStr&#34;: &#34;uint16&#34;,
+        &#34;CellVMinMod&#34;: &#34;uint16&#34;,
+        &#34;CellVAvg&#34;: &#34;uint16&#34;,
+        &#34;A&#34;: &#34;int16&#34;,
+        &#34;AChaMax&#34;: &#34;uint16&#34;,
+        &#34;ADisChaMax&#34;: &#34;uint16&#34;,
+        &#34;W&#34;: &#34;int16&#34;,
+        &#34;ReqInvState&#34;: &#34;enum16&#34;,
+        &#34;ReqW&#34;: &#34;int16&#34;,
+        &#34;SetOp&#34;: &#34;enum16&#34;,
+        &#34;SetInvState&#34;: &#34;enum16&#34;
+      },
+      &#34;id&#34;: 802
+    },
+    &#34;1&#34;: {
+      &#34;fixed&#34;: {
+        &#34;NStr&#34;: &#34;uint16&#34;,
+        &#34;NStrCon&#34;: &#34;uint16&#34;,
+        &#34;ModTmpMax&#34;: &#34;int16&#34;,
+        &#34;ModTmpMaxStr&#34;: &#34;uint16&#34;,
+        &#34;ModTmpMaxMod&#34;: &#34;uint16&#34;,
+        &#34;ModTmpMin&#34;: &#34;int16&#34;,
+        &#34;ModTmpMinStr&#34;: &#34;uint16&#34;,
+        &#34;ModTmpMinMod&#34;: &#34;uint16&#34;,
+        &#34;ModTmpAvg&#34;: &#34;uint16&#34;,
+        &#34;StrVMax&#34;: &#34;uint16&#34;,
+        &#34;StrVMaxStr&#34;: &#34;uint16&#34;,
+        &#34;StrVMin&#34;: &#34;uint16&#34;,
+        &#34;StrVMinStr&#34;: &#34;uint16&#34;,
+        &#34;StrVAvg&#34;: &#34;uint16&#34;,
+        &#34;StrAMax&#34;: &#34;int16&#34;,
+        &#34;StrAMaxStr&#34;: &#34;uint16&#34;,
+        &#34;StrAMin&#34;: &#34;int16&#34;,
+        &#34;StrAMinStr&#34;: &#34;uint16&#34;,
+        &#34;StrAAvg&#34;: &#34;int16&#34;,
+        &#34;NCellBal&#34;: &#34;uint16&#34;
+      },
+      &#34;repeating&#34;: {
+        &#34;0&#34;: {
+          &#34;StrNMod&#34;: &#34;uint16&#34;,
+          &#34;StrSt&#34;: &#34;bitfield32&#34;,
+          &#34;StrConFail&#34;: &#34;enum16&#34;,
+          &#34;StrSoC&#34;: &#34;uint16&#34;,
+          &#34;StrSoH&#34;: &#34;uint16&#34;,
+          &#34;StrA&#34;: &#34;int16&#34;,
+          &#34;StrCellVMax&#34;: &#34;uint16&#34;,
+          &#34;StrCellVMaxMod&#34;: &#34;uint16&#34;,
+          &#34;StrCellVMin&#34;: &#34;uint16&#34;,
+          &#34;StrCellVMinMod&#34;: &#34;uint16&#34;,
+          &#34;StrCellVAvg&#34;: &#34;uint16&#34;,
+          &#34;StrModTmpMax&#34;: &#34;int16&#34;,
+          &#34;StrModTmpMaxMod&#34;: &#34;uint16&#34;,
+          &#34;StrModTmpMin&#34;: &#34;int16&#34;,
+          &#34;StrModTmpMinMod&#34;: &#34;uint16&#34;,
+          &#34;StrModTmpAvg&#34;: &#34;int16&#34;,
+          &#34;StrDisRsn&#34;: &#34;enum16&#34;,
+          &#34;StrConSt&#34;: &#34;bitfield32&#34;,
+          &#34;StrEvt1&#34;: &#34;bitfield32&#34;,
+          &#34;StrEvt2&#34;: &#34;bitfield32&#34;,
+          &#34;StrEvtVnd1&#34;: &#34;bitfield32&#34;,
+          &#34;StrEvtVnd2&#34;: &#34;bitfield32&#34;,
+          &#34;StrSetEna&#34;: &#34;enum16&#34;,
+          &#34;StrSetCon&#34;: &#34;enum16&#34;
+        }
+      },
+      &#34;id&#34;: 803
+    },
+    &#34;2&#34;: {
+      &#34;fixed&#34;: {
+        &#34;StrIdx&#34;: &#34;uint16&#34;,
+        &#34;ModIdx&#34;: &#34;uint16&#34;,
+        &#34;NCell&#34;: &#34;uint16&#34;,
+        &#34;SoC&#34;: &#34;uint16&#34;,
+        &#34;DoD&#34;: &#34;uint16&#34;,
+        &#34;SoH&#34;: &#34;uint16&#34;,
+        &#34;NCyc&#34;: &#34;uint32&#34;,
+        &#34;V&#34;: &#34;uint16&#34;,
+        &#34;CellVMax&#34;: &#34;uint16&#34;,
+        &#34;CellVMaxCell&#34;: &#34;uint16&#34;,
+        &#34;CellVMin&#34;: &#34;uint16&#34;,
+        &#34;CellVMinCell&#34;: &#34;uint16&#34;,
+        &#34;CellVAvg&#34;: &#34;uint16&#34;,
+        &#34;CellTmpMax&#34;: &#34;int16&#34;,
+        &#34;CellTmpMaxCell&#34;: &#34;uint16&#34;,
+        &#34;CellTmpMin&#34;: &#34;int16&#34;,
+        &#34;CellTmpMinCell&#34;: &#34;uint16&#34;,
+        &#34;CellTmpAvg&#34;: &#34;int16&#34;,
+        &#34;NCellBal&#34;: &#34;uint16&#34;,
+        &#34;SN&#34;: &#34;string&#34;
+      },
+      &#34;repeating&#34;: {
+        &#34;0&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;1&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;2&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;3&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;4&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;5&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;6&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;7&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;8&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;9&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;10&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;11&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;12&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;13&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;14&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        },
+        &#34;15&#34;: {
+          &#34;CellV&#34;: &#34;uint16&#34;,
+          &#34;CellTmp&#34;: &#34;int16&#34;,
+          &#34;CellSt&#34;: &#34;bitfield32&#34;
+        }
+      },
+      &#34;id&#34;: 805
+    }
+  }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you want to see some example values instead you can do the following.  Note that <a href="https://github.com/sunspec/pysunspec/blob/master/sunspec/core/suns.py">data points that are not "Mandatory" will use these values to show that they are unimplemented.  </a>.  In this example, we will show dummy data in the following points (written as <code>model_id.symbol</code>).</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">shadowsunspec.values</span> <span class="kn">import</span> <span class="n">example_values</span><span class="p">,</span> <span class="n">ShadowSunspecValueEncoder</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">example_values</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;805.StrIdx&#39;,
+ &#39;805.NCell&#39;,
+ &#39;805.V&#39;,
+ &#39;805.CellV&#39;,
+ &#39;805.CellSt&#39;,
+ &#39;805.CellTmp&#39;,
+ &#39;802.V&#39;,
+ &#39;802.A&#39;,
+ &#39;802.W&#39;,
+ &#39;802.SoC&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">example_values</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">example_device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">example_device</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ShadowSunspecValueEncoder</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+  &#34;sunspec&#34;: {
+    &#34;0&#34;: {
+      &#34;fixed&#34;: {
+        &#34;AHRtg&#34;: 65535,
+        &#34;WHRtg&#34;: 65535,
+        &#34;WChaRteMax&#34;: 65535,
+        &#34;WDisChaRteMax&#34;: 65535,
+        &#34;DisChaRte&#34;: 65535,
+        &#34;SoCMax&#34;: 65535,
+        &#34;SoCMin&#34;: 65535,
+        &#34;SocRsvMax&#34;: 65535,
+        &#34;SoCRsvMin&#34;: 65535,
+        &#34;SoC&#34;: 480,
+        &#34;DoD&#34;: 65535,
+        &#34;SoH&#34;: 65535,
+        &#34;NCyc&#34;: 4294967295,
+        &#34;ChaSt&#34;: 65535,
+        &#34;LocRemCtl&#34;: 65535,
+        &#34;Hb&#34;: 65535,
+        &#34;CtrlHb&#34;: 65535,
+        &#34;AlmRst&#34;: 65535,
+        &#34;Typ&#34;: 65535,
+        &#34;State&#34;: 65535,
+        &#34;StateVnd&#34;: 65535,
+        &#34;WarrDt&#34;: 4294967295,
+        &#34;Evt1&#34;: 4294967295,
+        &#34;Evt2&#34;: 4294967295,
+        &#34;EvtVnd1&#34;: 4294967295,
+        &#34;EvtVnd2&#34;: 4294967295,
+        &#34;V&#34;: 492,
+        &#34;VMax&#34;: 65535,
+        &#34;VMin&#34;: 65535,
+        &#34;CellVMax&#34;: 65535,
+        &#34;CellVMaxStr&#34;: 65535,
+        &#34;CellVMaxMod&#34;: 65535,
+        &#34;CellVMin&#34;: 65535,
+        &#34;CellVMinStr&#34;: 65535,
+        &#34;CellVMinMod&#34;: 65535,
+        &#34;CellVAvg&#34;: 65535,
+        &#34;A&#34;: 428,
+        &#34;AChaMax&#34;: 65535,
+        &#34;ADisChaMax&#34;: 65535,
+        &#34;W&#34;: 253,
+        &#34;ReqInvState&#34;: 65535,
+        &#34;ReqW&#34;: -32768,
+        &#34;SetOp&#34;: 65535,
+        &#34;SetInvState&#34;: 65535
+      },
+      &#34;id&#34;: 802
+    },
+    &#34;1&#34;: {
+      &#34;fixed&#34;: {
+        &#34;NStr&#34;: 65535,
+        &#34;NStrCon&#34;: 65535,
+        &#34;ModTmpMax&#34;: -32768,
+        &#34;ModTmpMaxStr&#34;: 65535,
+        &#34;ModTmpMaxMod&#34;: 65535,
+        &#34;ModTmpMin&#34;: -32768,
+        &#34;ModTmpMinStr&#34;: 65535,
+        &#34;ModTmpMinMod&#34;: 65535,
+        &#34;ModTmpAvg&#34;: 65535,
+        &#34;StrVMax&#34;: 65535,
+        &#34;StrVMaxStr&#34;: 65535,
+        &#34;StrVMin&#34;: 65535,
+        &#34;StrVMinStr&#34;: 65535,
+        &#34;StrVAvg&#34;: 65535,
+        &#34;StrAMax&#34;: -32768,
+        &#34;StrAMaxStr&#34;: 65535,
+        &#34;StrAMin&#34;: -32768,
+        &#34;StrAMinStr&#34;: 65535,
+        &#34;StrAAvg&#34;: -32768,
+        &#34;NCellBal&#34;: 65535
+      },
+      &#34;repeating&#34;: {
+        &#34;0&#34;: {
+          &#34;StrNMod&#34;: 65535,
+          &#34;StrSt&#34;: 4294967295,
+          &#34;StrConFail&#34;: 65535,
+          &#34;StrSoC&#34;: 65535,
+          &#34;StrSoH&#34;: 65535,
+          &#34;StrA&#34;: -32768,
+          &#34;StrCellVMax&#34;: 65535,
+          &#34;StrCellVMaxMod&#34;: 65535,
+          &#34;StrCellVMin&#34;: 65535,
+          &#34;StrCellVMinMod&#34;: 65535,
+          &#34;StrCellVAvg&#34;: 65535,
+          &#34;StrModTmpMax&#34;: -32768,
+          &#34;StrModTmpMaxMod&#34;: 65535,
+          &#34;StrModTmpMin&#34;: -32768,
+          &#34;StrModTmpMinMod&#34;: 65535,
+          &#34;StrModTmpAvg&#34;: -32768,
+          &#34;StrDisRsn&#34;: 65535,
+          &#34;StrConSt&#34;: 4294967295,
+          &#34;StrEvt1&#34;: 4294967295,
+          &#34;StrEvt2&#34;: 4294967295,
+          &#34;StrEvtVnd1&#34;: 4294967295,
+          &#34;StrEvtVnd2&#34;: 4294967295,
+          &#34;StrSetEna&#34;: 65535,
+          &#34;StrSetCon&#34;: 65535
+        }
+      },
+      &#34;id&#34;: 803
+    },
+    &#34;2&#34;: {
+      &#34;fixed&#34;: {
+        &#34;StrIdx&#34;: 1,
+        &#34;ModIdx&#34;: 65535,
+        &#34;NCell&#34;: 16,
+        &#34;SoC&#34;: 65535,
+        &#34;DoD&#34;: 65535,
+        &#34;SoH&#34;: 65535,
+        &#34;NCyc&#34;: 4294967295,
+        &#34;V&#34;: 511,
+        &#34;CellVMax&#34;: 65535,
+        &#34;CellVMaxCell&#34;: 65535,
+        &#34;CellVMin&#34;: 65535,
+        &#34;CellVMinCell&#34;: 65535,
+        &#34;CellVAvg&#34;: 65535,
+        &#34;CellTmpMax&#34;: -32768,
+        &#34;CellTmpMaxCell&#34;: 65535,
+        &#34;CellTmpMin&#34;: -32768,
+        &#34;CellTmpMinCell&#34;: 65535,
+        &#34;CellTmpAvg&#34;: -32768,
+        &#34;NCellBal&#34;: 65535,
+        &#34;SN&#34;: 0
+      },
+      &#34;repeating&#34;: {
+        &#34;0&#34;: {
+          &#34;CellV&#34;: 304,
+          &#34;CellTmp&#34;: 309,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;1&#34;: {
+          &#34;CellV&#34;: 317,
+          &#34;CellTmp&#34;: 307,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;2&#34;: {
+          &#34;CellV&#34;: 287,
+          &#34;CellTmp&#34;: 309,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;3&#34;: {
+          &#34;CellV&#34;: 291,
+          &#34;CellTmp&#34;: 321,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;4&#34;: {
+          &#34;CellV&#34;: 288,
+          &#34;CellTmp&#34;: 308,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;5&#34;: {
+          &#34;CellV&#34;: 307,
+          &#34;CellTmp&#34;: 335,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;6&#34;: {
+          &#34;CellV&#34;: 318,
+          &#34;CellTmp&#34;: 322,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;7&#34;: {
+          &#34;CellV&#34;: 312,
+          &#34;CellTmp&#34;: 306,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;8&#34;: {
+          &#34;CellV&#34;: 302,
+          &#34;CellTmp&#34;: 335,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;9&#34;: {
+          &#34;CellV&#34;: 283,
+          &#34;CellTmp&#34;: 338,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;10&#34;: {
+          &#34;CellV&#34;: 312,
+          &#34;CellTmp&#34;: 326,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;11&#34;: {
+          &#34;CellV&#34;: 320,
+          &#34;CellTmp&#34;: 339,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;12&#34;: {
+          &#34;CellV&#34;: 318,
+          &#34;CellTmp&#34;: 300,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;13&#34;: {
+          &#34;CellV&#34;: 327,
+          &#34;CellTmp&#34;: 321,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;14&#34;: {
+          &#34;CellV&#34;: 291,
+          &#34;CellTmp&#34;: 332,
+          &#34;CellSt&#34;: 0
+        },
+        &#34;15&#34;: {
+          &#34;CellV&#34;: 288,
+          &#34;CellTmp&#34;: 329,
+          &#34;CellSt&#34;: 0
+        }
+      },
+      &#34;id&#34;: 805
+    }
+  }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 

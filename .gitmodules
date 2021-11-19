@@ -1,0 +1,3 @@
+[submodule "pysunspec"]
+	path = pysunspec
+	url = https://github.com/sunspec/pysunspec.git

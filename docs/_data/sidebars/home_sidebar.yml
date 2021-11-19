@@ -11,8 +11,8 @@ entries:
       url: /
     - output: web,pdf
       title: Title
-      url: boilerplate.html
+      url: values.html
     output: web
-    title: repo_template
+    title: shadowsunspec
   output: web
   title: Sidebar
