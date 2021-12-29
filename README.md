@@ -124,11 +124,9 @@ To mirror this format, serialize data using these rules
 
 ```json
 {
-    "sunspec": {
-                "0": <Model>,
-                "1": <Model>,
-                <...>,
-    }
+    "0": <Model>,
+    "1": <Model>,
+    <...>,
 }
 ```
 
@@ -198,7 +196,6 @@ In this case we only need model `802` to cover the whole bank, and we need one m
 
 ```json
 {
-  "sunspec": {
     "0": {
       "id": 802,
       "fixed": {
@@ -262,7 +259,6 @@ In this case we only need model `802` to cover the whole bank, and we need one m
         }
       }
     }
-  }
 }
 ```
 
@@ -288,216 +284,214 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
 ```
 
     {
-      "sunspec": {
-        "0": {
-          "fixed": {
-            "AHRtg": "uint16",
-            "WHRtg": "uint16",
-            "WChaRteMax": "uint16",
-            "WDisChaRteMax": "uint16",
-            "DisChaRte": "uint16",
-            "SoCMax": "uint16",
-            "SoCMin": "uint16",
-            "SocRsvMax": "uint16",
-            "SoCRsvMin": "uint16",
-            "SoC": "uint16",
-            "DoD": "uint16",
-            "SoH": "uint16",
-            "NCyc": "uint32",
-            "ChaSt": "enum16",
-            "LocRemCtl": "enum16",
-            "Hb": "uint16",
-            "CtrlHb": "uint16",
-            "AlmRst": "uint16",
-            "Typ": "enum16",
-            "State": "enum16",
-            "StateVnd": "enum16",
-            "WarrDt": "uint32",
-            "Evt1": "bitfield32",
-            "Evt2": "bitfield32",
-            "EvtVnd1": "bitfield32",
-            "EvtVnd2": "bitfield32",
-            "V": "uint16",
-            "VMax": "uint16",
-            "VMin": "uint16",
-            "CellVMax": "uint16",
-            "CellVMaxStr": "uint16",
-            "CellVMaxMod": "uint16",
-            "CellVMin": "uint16",
-            "CellVMinStr": "uint16",
-            "CellVMinMod": "uint16",
-            "CellVAvg": "uint16",
-            "A": "int16",
-            "AChaMax": "uint16",
-            "ADisChaMax": "uint16",
-            "W": "int16",
-            "ReqInvState": "enum16",
-            "ReqW": "int16",
-            "SetOp": "enum16",
-            "SetInvState": "enum16"
-          },
-          "id": 802
+      "0": {
+        "fixed": {
+          "AHRtg": "uint16",
+          "WHRtg": "uint16",
+          "WChaRteMax": "uint16",
+          "WDisChaRteMax": "uint16",
+          "DisChaRte": "uint16",
+          "SoCMax": "uint16",
+          "SoCMin": "uint16",
+          "SocRsvMax": "uint16",
+          "SoCRsvMin": "uint16",
+          "SoC": "uint16",
+          "DoD": "uint16",
+          "SoH": "uint16",
+          "NCyc": "uint32",
+          "ChaSt": "enum16",
+          "LocRemCtl": "enum16",
+          "Hb": "uint16",
+          "CtrlHb": "uint16",
+          "AlmRst": "uint16",
+          "Typ": "enum16",
+          "State": "enum16",
+          "StateVnd": "enum16",
+          "WarrDt": "uint32",
+          "Evt1": "bitfield32",
+          "Evt2": "bitfield32",
+          "EvtVnd1": "bitfield32",
+          "EvtVnd2": "bitfield32",
+          "V": "uint16",
+          "VMax": "uint16",
+          "VMin": "uint16",
+          "CellVMax": "uint16",
+          "CellVMaxStr": "uint16",
+          "CellVMaxMod": "uint16",
+          "CellVMin": "uint16",
+          "CellVMinStr": "uint16",
+          "CellVMinMod": "uint16",
+          "CellVAvg": "uint16",
+          "A": "int16",
+          "AChaMax": "uint16",
+          "ADisChaMax": "uint16",
+          "W": "int16",
+          "ReqInvState": "enum16",
+          "ReqW": "int16",
+          "SetOp": "enum16",
+          "SetInvState": "enum16"
         },
-        "1": {
-          "fixed": {
-            "NStr": "uint16",
-            "NStrCon": "uint16",
-            "ModTmpMax": "int16",
-            "ModTmpMaxStr": "uint16",
-            "ModTmpMaxMod": "uint16",
-            "ModTmpMin": "int16",
-            "ModTmpMinStr": "uint16",
-            "ModTmpMinMod": "uint16",
-            "ModTmpAvg": "uint16",
-            "StrVMax": "uint16",
-            "StrVMaxStr": "uint16",
-            "StrVMin": "uint16",
-            "StrVMinStr": "uint16",
-            "StrVAvg": "uint16",
-            "StrAMax": "int16",
-            "StrAMaxStr": "uint16",
-            "StrAMin": "int16",
-            "StrAMinStr": "uint16",
-            "StrAAvg": "int16",
-            "NCellBal": "uint16"
-          },
-          "repeating": {
-            "0": {
-              "StrNMod": "uint16",
-              "StrSt": "bitfield32",
-              "StrConFail": "enum16",
-              "StrSoC": "uint16",
-              "StrSoH": "uint16",
-              "StrA": "int16",
-              "StrCellVMax": "uint16",
-              "StrCellVMaxMod": "uint16",
-              "StrCellVMin": "uint16",
-              "StrCellVMinMod": "uint16",
-              "StrCellVAvg": "uint16",
-              "StrModTmpMax": "int16",
-              "StrModTmpMaxMod": "uint16",
-              "StrModTmpMin": "int16",
-              "StrModTmpMinMod": "uint16",
-              "StrModTmpAvg": "int16",
-              "StrDisRsn": "enum16",
-              "StrConSt": "bitfield32",
-              "StrEvt1": "bitfield32",
-              "StrEvt2": "bitfield32",
-              "StrEvtVnd1": "bitfield32",
-              "StrEvtVnd2": "bitfield32",
-              "StrSetEna": "enum16",
-              "StrSetCon": "enum16"
-            }
-          },
-          "id": 803
+        "id": 802
+      },
+      "1": {
+        "fixed": {
+          "NStr": "uint16",
+          "NStrCon": "uint16",
+          "ModTmpMax": "int16",
+          "ModTmpMaxStr": "uint16",
+          "ModTmpMaxMod": "uint16",
+          "ModTmpMin": "int16",
+          "ModTmpMinStr": "uint16",
+          "ModTmpMinMod": "uint16",
+          "ModTmpAvg": "uint16",
+          "StrVMax": "uint16",
+          "StrVMaxStr": "uint16",
+          "StrVMin": "uint16",
+          "StrVMinStr": "uint16",
+          "StrVAvg": "uint16",
+          "StrAMax": "int16",
+          "StrAMaxStr": "uint16",
+          "StrAMin": "int16",
+          "StrAMinStr": "uint16",
+          "StrAAvg": "int16",
+          "NCellBal": "uint16"
         },
-        "2": {
-          "fixed": {
-            "StrIdx": "uint16",
-            "ModIdx": "uint16",
-            "NCell": "uint16",
-            "SoC": "uint16",
-            "DoD": "uint16",
-            "SoH": "uint16",
-            "NCyc": "uint32",
-            "V": "uint16",
-            "CellVMax": "uint16",
-            "CellVMaxCell": "uint16",
-            "CellVMin": "uint16",
-            "CellVMinCell": "uint16",
-            "CellVAvg": "uint16",
-            "CellTmpMax": "int16",
-            "CellTmpMaxCell": "uint16",
-            "CellTmpMin": "int16",
-            "CellTmpMinCell": "uint16",
-            "CellTmpAvg": "int16",
-            "NCellBal": "uint16",
-            "SN": "string"
+        "repeating": {
+          "0": {
+            "StrNMod": "uint16",
+            "StrSt": "bitfield32",
+            "StrConFail": "enum16",
+            "StrSoC": "uint16",
+            "StrSoH": "uint16",
+            "StrA": "int16",
+            "StrCellVMax": "uint16",
+            "StrCellVMaxMod": "uint16",
+            "StrCellVMin": "uint16",
+            "StrCellVMinMod": "uint16",
+            "StrCellVAvg": "uint16",
+            "StrModTmpMax": "int16",
+            "StrModTmpMaxMod": "uint16",
+            "StrModTmpMin": "int16",
+            "StrModTmpMinMod": "uint16",
+            "StrModTmpAvg": "int16",
+            "StrDisRsn": "enum16",
+            "StrConSt": "bitfield32",
+            "StrEvt1": "bitfield32",
+            "StrEvt2": "bitfield32",
+            "StrEvtVnd1": "bitfield32",
+            "StrEvtVnd2": "bitfield32",
+            "StrSetEna": "enum16",
+            "StrSetCon": "enum16"
+          }
+        },
+        "id": 803
+      },
+      "2": {
+        "fixed": {
+          "StrIdx": "uint16",
+          "ModIdx": "uint16",
+          "NCell": "uint16",
+          "SoC": "uint16",
+          "DoD": "uint16",
+          "SoH": "uint16",
+          "NCyc": "uint32",
+          "V": "uint16",
+          "CellVMax": "uint16",
+          "CellVMaxCell": "uint16",
+          "CellVMin": "uint16",
+          "CellVMinCell": "uint16",
+          "CellVAvg": "uint16",
+          "CellTmpMax": "int16",
+          "CellTmpMaxCell": "uint16",
+          "CellTmpMin": "int16",
+          "CellTmpMinCell": "uint16",
+          "CellTmpAvg": "int16",
+          "NCellBal": "uint16",
+          "SN": "string"
+        },
+        "repeating": {
+          "0": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
           },
-          "repeating": {
-            "0": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "1": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "2": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "3": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "4": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "5": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "6": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "7": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "8": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "9": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "10": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "11": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "12": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "13": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "14": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            },
-            "15": {
-              "CellV": "uint16",
-              "CellTmp": "int16",
-              "CellSt": "bitfield32"
-            }
+          "1": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
           },
-          "id": 805
-        }
+          "2": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "3": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "4": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "5": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "6": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "7": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "8": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "9": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "10": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "11": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "12": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "13": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "14": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          },
+          "15": {
+            "CellV": "uint16",
+            "CellTmp": "int16",
+            "CellSt": "bitfield32"
+          }
+        },
+        "id": 805
       }
     }
 
@@ -528,216 +522,214 @@ print(json.dumps(example_device, cls=ShadowSunspecValueEncoder, indent=2))
 ```
 
     {
-      "sunspec": {
-        "0": {
-          "fixed": {
-            "AHRtg": 65535,
-            "WHRtg": 65535,
-            "WChaRteMax": 65535,
-            "WDisChaRteMax": 65535,
-            "DisChaRte": 65535,
-            "SoCMax": 65535,
-            "SoCMin": 65535,
-            "SocRsvMax": 65535,
-            "SoCRsvMin": 65535,
-            "SoC": 480,
-            "DoD": 65535,
-            "SoH": 65535,
-            "NCyc": 4294967295,
-            "ChaSt": 65535,
-            "LocRemCtl": 65535,
-            "Hb": 65535,
-            "CtrlHb": 65535,
-            "AlmRst": 65535,
-            "Typ": 65535,
-            "State": 65535,
-            "StateVnd": 65535,
-            "WarrDt": 4294967295,
-            "Evt1": 4294967295,
-            "Evt2": 4294967295,
-            "EvtVnd1": 4294967295,
-            "EvtVnd2": 4294967295,
-            "V": 492,
-            "VMax": 65535,
-            "VMin": 65535,
-            "CellVMax": 65535,
-            "CellVMaxStr": 65535,
-            "CellVMaxMod": 65535,
-            "CellVMin": 65535,
-            "CellVMinStr": 65535,
-            "CellVMinMod": 65535,
-            "CellVAvg": 65535,
-            "A": 428,
-            "AChaMax": 65535,
-            "ADisChaMax": 65535,
-            "W": 253,
-            "ReqInvState": 65535,
-            "ReqW": -32768,
-            "SetOp": 65535,
-            "SetInvState": 65535
-          },
-          "id": 802
+      "0": {
+        "fixed": {
+          "AHRtg": 65535,
+          "WHRtg": 65535,
+          "WChaRteMax": 65535,
+          "WDisChaRteMax": 65535,
+          "DisChaRte": 65535,
+          "SoCMax": 65535,
+          "SoCMin": 65535,
+          "SocRsvMax": 65535,
+          "SoCRsvMin": 65535,
+          "SoC": 489,
+          "DoD": 65535,
+          "SoH": 65535,
+          "NCyc": 4294967295,
+          "ChaSt": 65535,
+          "LocRemCtl": 65535,
+          "Hb": 65535,
+          "CtrlHb": 65535,
+          "AlmRst": 65535,
+          "Typ": 65535,
+          "State": 65535,
+          "StateVnd": 65535,
+          "WarrDt": 4294967295,
+          "Evt1": 4294967295,
+          "Evt2": 4294967295,
+          "EvtVnd1": 4294967295,
+          "EvtVnd2": 4294967295,
+          "V": 495,
+          "VMax": 65535,
+          "VMin": 65535,
+          "CellVMax": 65535,
+          "CellVMaxStr": 65535,
+          "CellVMaxMod": 65535,
+          "CellVMin": 65535,
+          "CellVMinStr": 65535,
+          "CellVMinMod": 65535,
+          "CellVAvg": 65535,
+          "A": 409,
+          "AChaMax": 65535,
+          "ADisChaMax": 65535,
+          "W": 358,
+          "ReqInvState": 65535,
+          "ReqW": -32768,
+          "SetOp": 65535,
+          "SetInvState": 65535
         },
-        "1": {
-          "fixed": {
-            "NStr": 65535,
-            "NStrCon": 65535,
-            "ModTmpMax": -32768,
-            "ModTmpMaxStr": 65535,
-            "ModTmpMaxMod": 65535,
-            "ModTmpMin": -32768,
-            "ModTmpMinStr": 65535,
-            "ModTmpMinMod": 65535,
-            "ModTmpAvg": 65535,
-            "StrVMax": 65535,
-            "StrVMaxStr": 65535,
-            "StrVMin": 65535,
-            "StrVMinStr": 65535,
-            "StrVAvg": 65535,
-            "StrAMax": -32768,
-            "StrAMaxStr": 65535,
-            "StrAMin": -32768,
-            "StrAMinStr": 65535,
-            "StrAAvg": -32768,
-            "NCellBal": 65535
-          },
-          "repeating": {
-            "0": {
-              "StrNMod": 65535,
-              "StrSt": 4294967295,
-              "StrConFail": 65535,
-              "StrSoC": 65535,
-              "StrSoH": 65535,
-              "StrA": -32768,
-              "StrCellVMax": 65535,
-              "StrCellVMaxMod": 65535,
-              "StrCellVMin": 65535,
-              "StrCellVMinMod": 65535,
-              "StrCellVAvg": 65535,
-              "StrModTmpMax": -32768,
-              "StrModTmpMaxMod": 65535,
-              "StrModTmpMin": -32768,
-              "StrModTmpMinMod": 65535,
-              "StrModTmpAvg": -32768,
-              "StrDisRsn": 65535,
-              "StrConSt": 4294967295,
-              "StrEvt1": 4294967295,
-              "StrEvt2": 4294967295,
-              "StrEvtVnd1": 4294967295,
-              "StrEvtVnd2": 4294967295,
-              "StrSetEna": 65535,
-              "StrSetCon": 65535
-            }
-          },
-          "id": 803
+        "id": 802
+      },
+      "1": {
+        "fixed": {
+          "NStr": 65535,
+          "NStrCon": 65535,
+          "ModTmpMax": -32768,
+          "ModTmpMaxStr": 65535,
+          "ModTmpMaxMod": 65535,
+          "ModTmpMin": -32768,
+          "ModTmpMinStr": 65535,
+          "ModTmpMinMod": 65535,
+          "ModTmpAvg": 65535,
+          "StrVMax": 65535,
+          "StrVMaxStr": 65535,
+          "StrVMin": 65535,
+          "StrVMinStr": 65535,
+          "StrVAvg": 65535,
+          "StrAMax": -32768,
+          "StrAMaxStr": 65535,
+          "StrAMin": -32768,
+          "StrAMinStr": 65535,
+          "StrAAvg": -32768,
+          "NCellBal": 65535
         },
-        "2": {
-          "fixed": {
-            "StrIdx": 1,
-            "ModIdx": 65535,
-            "NCell": 16,
-            "SoC": 65535,
-            "DoD": 65535,
-            "SoH": 65535,
-            "NCyc": 4294967295,
-            "V": 511,
-            "CellVMax": 65535,
-            "CellVMaxCell": 65535,
-            "CellVMin": 65535,
-            "CellVMinCell": 65535,
-            "CellVAvg": 65535,
-            "CellTmpMax": -32768,
-            "CellTmpMaxCell": 65535,
-            "CellTmpMin": -32768,
-            "CellTmpMinCell": 65535,
-            "CellTmpAvg": -32768,
-            "NCellBal": 65535,
-            "SN": 0
+        "repeating": {
+          "0": {
+            "StrNMod": 65535,
+            "StrSt": 4294967295,
+            "StrConFail": 65535,
+            "StrSoC": 65535,
+            "StrSoH": 65535,
+            "StrA": -32768,
+            "StrCellVMax": 65535,
+            "StrCellVMaxMod": 65535,
+            "StrCellVMin": 65535,
+            "StrCellVMinMod": 65535,
+            "StrCellVAvg": 65535,
+            "StrModTmpMax": -32768,
+            "StrModTmpMaxMod": 65535,
+            "StrModTmpMin": -32768,
+            "StrModTmpMinMod": 65535,
+            "StrModTmpAvg": -32768,
+            "StrDisRsn": 65535,
+            "StrConSt": 4294967295,
+            "StrEvt1": 4294967295,
+            "StrEvt2": 4294967295,
+            "StrEvtVnd1": 4294967295,
+            "StrEvtVnd2": 4294967295,
+            "StrSetEna": 65535,
+            "StrSetCon": 65535
+          }
+        },
+        "id": 803
+      },
+      "2": {
+        "fixed": {
+          "StrIdx": 1,
+          "ModIdx": 65535,
+          "NCell": 16,
+          "SoC": 65535,
+          "DoD": 65535,
+          "SoH": 65535,
+          "NCyc": 4294967295,
+          "V": 508,
+          "CellVMax": 65535,
+          "CellVMaxCell": 65535,
+          "CellVMin": 65535,
+          "CellVMinCell": 65535,
+          "CellVAvg": 65535,
+          "CellTmpMax": -32768,
+          "CellTmpMaxCell": 65535,
+          "CellTmpMin": -32768,
+          "CellTmpMinCell": 65535,
+          "CellTmpAvg": -32768,
+          "NCellBal": 65535,
+          "SN": 0
+        },
+        "repeating": {
+          "0": {
+            "CellV": 303,
+            "CellTmp": 306,
+            "CellSt": 0
           },
-          "repeating": {
-            "0": {
-              "CellV": 304,
-              "CellTmp": 309,
-              "CellSt": 0
-            },
-            "1": {
-              "CellV": 317,
-              "CellTmp": 307,
-              "CellSt": 0
-            },
-            "2": {
-              "CellV": 287,
-              "CellTmp": 309,
-              "CellSt": 0
-            },
-            "3": {
-              "CellV": 291,
-              "CellTmp": 321,
-              "CellSt": 0
-            },
-            "4": {
-              "CellV": 288,
-              "CellTmp": 308,
-              "CellSt": 0
-            },
-            "5": {
-              "CellV": 307,
-              "CellTmp": 335,
-              "CellSt": 0
-            },
-            "6": {
-              "CellV": 318,
-              "CellTmp": 322,
-              "CellSt": 0
-            },
-            "7": {
-              "CellV": 312,
-              "CellTmp": 306,
-              "CellSt": 0
-            },
-            "8": {
-              "CellV": 302,
-              "CellTmp": 335,
-              "CellSt": 0
-            },
-            "9": {
-              "CellV": 283,
-              "CellTmp": 338,
-              "CellSt": 0
-            },
-            "10": {
-              "CellV": 312,
-              "CellTmp": 326,
-              "CellSt": 0
-            },
-            "11": {
-              "CellV": 320,
-              "CellTmp": 339,
-              "CellSt": 0
-            },
-            "12": {
-              "CellV": 318,
-              "CellTmp": 300,
-              "CellSt": 0
-            },
-            "13": {
-              "CellV": 327,
-              "CellTmp": 321,
-              "CellSt": 0
-            },
-            "14": {
-              "CellV": 291,
-              "CellTmp": 332,
-              "CellSt": 0
-            },
-            "15": {
-              "CellV": 288,
-              "CellTmp": 329,
-              "CellSt": 0
-            }
+          "1": {
+            "CellV": 294,
+            "CellTmp": 327,
+            "CellSt": 0
           },
-          "id": 805
-        }
+          "2": {
+            "CellV": 292,
+            "CellTmp": 300,
+            "CellSt": 0
+          },
+          "3": {
+            "CellV": 280,
+            "CellTmp": 310,
+            "CellSt": 0
+          },
+          "4": {
+            "CellV": 299,
+            "CellTmp": 303,
+            "CellSt": 0
+          },
+          "5": {
+            "CellV": 292,
+            "CellTmp": 305,
+            "CellSt": 0
+          },
+          "6": {
+            "CellV": 292,
+            "CellTmp": 320,
+            "CellSt": 0
+          },
+          "7": {
+            "CellV": 305,
+            "CellTmp": 324,
+            "CellSt": 0
+          },
+          "8": {
+            "CellV": 288,
+            "CellTmp": 326,
+            "CellSt": 0
+          },
+          "9": {
+            "CellV": 312,
+            "CellTmp": 322,
+            "CellSt": 0
+          },
+          "10": {
+            "CellV": 297,
+            "CellTmp": 325,
+            "CellSt": 0
+          },
+          "11": {
+            "CellV": 290,
+            "CellTmp": 339,
+            "CellSt": 0
+          },
+          "12": {
+            "CellV": 290,
+            "CellTmp": 329,
+            "CellSt": 0
+          },
+          "13": {
+            "CellV": 320,
+            "CellTmp": 308,
+            "CellSt": 0
+          },
+          "14": {
+            "CellV": 319,
+            "CellTmp": 320,
+            "CellSt": 0
+          },
+          "15": {
+            "CellV": 283,
+            "CellTmp": 302,
+            "CellSt": 0
+          }
+        },
+        "id": 805
       }
     }
 

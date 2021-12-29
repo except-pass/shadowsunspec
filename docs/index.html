@@ -273,11 +273,9 @@ nb_path: "nbs/index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;sunspec&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
-                <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
-                <span class="err">&lt;...&gt;</span><span class="p">,</span>
-    <span class="p">}</span>
+    <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
+    <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
+    <span class="err">&lt;...&gt;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 <p>A <code>Model</code> is made up of one or more point groups.  There will always be a fixed point group.  There will then be zero or more repeating point groups.  We can serialize a <code>Model</code> as</p>
@@ -369,7 +367,6 @@ nb_path: "nbs/index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nt">&quot;sunspec&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">802</span><span class="p">,</span>
       <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -433,7 +430,6 @@ nb_path: "nbs/index.ipynb"
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
-  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -488,216 +484,214 @@ nb_path: "nbs/index.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{
-  &#34;sunspec&#34;: {
-    &#34;0&#34;: {
-      &#34;fixed&#34;: {
-        &#34;AHRtg&#34;: &#34;uint16&#34;,
-        &#34;WHRtg&#34;: &#34;uint16&#34;,
-        &#34;WChaRteMax&#34;: &#34;uint16&#34;,
-        &#34;WDisChaRteMax&#34;: &#34;uint16&#34;,
-        &#34;DisChaRte&#34;: &#34;uint16&#34;,
-        &#34;SoCMax&#34;: &#34;uint16&#34;,
-        &#34;SoCMin&#34;: &#34;uint16&#34;,
-        &#34;SocRsvMax&#34;: &#34;uint16&#34;,
-        &#34;SoCRsvMin&#34;: &#34;uint16&#34;,
-        &#34;SoC&#34;: &#34;uint16&#34;,
-        &#34;DoD&#34;: &#34;uint16&#34;,
-        &#34;SoH&#34;: &#34;uint16&#34;,
-        &#34;NCyc&#34;: &#34;uint32&#34;,
-        &#34;ChaSt&#34;: &#34;enum16&#34;,
-        &#34;LocRemCtl&#34;: &#34;enum16&#34;,
-        &#34;Hb&#34;: &#34;uint16&#34;,
-        &#34;CtrlHb&#34;: &#34;uint16&#34;,
-        &#34;AlmRst&#34;: &#34;uint16&#34;,
-        &#34;Typ&#34;: &#34;enum16&#34;,
-        &#34;State&#34;: &#34;enum16&#34;,
-        &#34;StateVnd&#34;: &#34;enum16&#34;,
-        &#34;WarrDt&#34;: &#34;uint32&#34;,
-        &#34;Evt1&#34;: &#34;bitfield32&#34;,
-        &#34;Evt2&#34;: &#34;bitfield32&#34;,
-        &#34;EvtVnd1&#34;: &#34;bitfield32&#34;,
-        &#34;EvtVnd2&#34;: &#34;bitfield32&#34;,
-        &#34;V&#34;: &#34;uint16&#34;,
-        &#34;VMax&#34;: &#34;uint16&#34;,
-        &#34;VMin&#34;: &#34;uint16&#34;,
-        &#34;CellVMax&#34;: &#34;uint16&#34;,
-        &#34;CellVMaxStr&#34;: &#34;uint16&#34;,
-        &#34;CellVMaxMod&#34;: &#34;uint16&#34;,
-        &#34;CellVMin&#34;: &#34;uint16&#34;,
-        &#34;CellVMinStr&#34;: &#34;uint16&#34;,
-        &#34;CellVMinMod&#34;: &#34;uint16&#34;,
-        &#34;CellVAvg&#34;: &#34;uint16&#34;,
-        &#34;A&#34;: &#34;int16&#34;,
-        &#34;AChaMax&#34;: &#34;uint16&#34;,
-        &#34;ADisChaMax&#34;: &#34;uint16&#34;,
-        &#34;W&#34;: &#34;int16&#34;,
-        &#34;ReqInvState&#34;: &#34;enum16&#34;,
-        &#34;ReqW&#34;: &#34;int16&#34;,
-        &#34;SetOp&#34;: &#34;enum16&#34;,
-        &#34;SetInvState&#34;: &#34;enum16&#34;
-      },
-      &#34;id&#34;: 802
+  &#34;0&#34;: {
+    &#34;fixed&#34;: {
+      &#34;AHRtg&#34;: &#34;uint16&#34;,
+      &#34;WHRtg&#34;: &#34;uint16&#34;,
+      &#34;WChaRteMax&#34;: &#34;uint16&#34;,
+      &#34;WDisChaRteMax&#34;: &#34;uint16&#34;,
+      &#34;DisChaRte&#34;: &#34;uint16&#34;,
+      &#34;SoCMax&#34;: &#34;uint16&#34;,
+      &#34;SoCMin&#34;: &#34;uint16&#34;,
+      &#34;SocRsvMax&#34;: &#34;uint16&#34;,
+      &#34;SoCRsvMin&#34;: &#34;uint16&#34;,
+      &#34;SoC&#34;: &#34;uint16&#34;,
+      &#34;DoD&#34;: &#34;uint16&#34;,
+      &#34;SoH&#34;: &#34;uint16&#34;,
+      &#34;NCyc&#34;: &#34;uint32&#34;,
+      &#34;ChaSt&#34;: &#34;enum16&#34;,
+      &#34;LocRemCtl&#34;: &#34;enum16&#34;,
+      &#34;Hb&#34;: &#34;uint16&#34;,
+      &#34;CtrlHb&#34;: &#34;uint16&#34;,
+      &#34;AlmRst&#34;: &#34;uint16&#34;,
+      &#34;Typ&#34;: &#34;enum16&#34;,
+      &#34;State&#34;: &#34;enum16&#34;,
+      &#34;StateVnd&#34;: &#34;enum16&#34;,
+      &#34;WarrDt&#34;: &#34;uint32&#34;,
+      &#34;Evt1&#34;: &#34;bitfield32&#34;,
+      &#34;Evt2&#34;: &#34;bitfield32&#34;,
+      &#34;EvtVnd1&#34;: &#34;bitfield32&#34;,
+      &#34;EvtVnd2&#34;: &#34;bitfield32&#34;,
+      &#34;V&#34;: &#34;uint16&#34;,
+      &#34;VMax&#34;: &#34;uint16&#34;,
+      &#34;VMin&#34;: &#34;uint16&#34;,
+      &#34;CellVMax&#34;: &#34;uint16&#34;,
+      &#34;CellVMaxStr&#34;: &#34;uint16&#34;,
+      &#34;CellVMaxMod&#34;: &#34;uint16&#34;,
+      &#34;CellVMin&#34;: &#34;uint16&#34;,
+      &#34;CellVMinStr&#34;: &#34;uint16&#34;,
+      &#34;CellVMinMod&#34;: &#34;uint16&#34;,
+      &#34;CellVAvg&#34;: &#34;uint16&#34;,
+      &#34;A&#34;: &#34;int16&#34;,
+      &#34;AChaMax&#34;: &#34;uint16&#34;,
+      &#34;ADisChaMax&#34;: &#34;uint16&#34;,
+      &#34;W&#34;: &#34;int16&#34;,
+      &#34;ReqInvState&#34;: &#34;enum16&#34;,
+      &#34;ReqW&#34;: &#34;int16&#34;,
+      &#34;SetOp&#34;: &#34;enum16&#34;,
+      &#34;SetInvState&#34;: &#34;enum16&#34;
     },
-    &#34;1&#34;: {
-      &#34;fixed&#34;: {
-        &#34;NStr&#34;: &#34;uint16&#34;,
-        &#34;NStrCon&#34;: &#34;uint16&#34;,
-        &#34;ModTmpMax&#34;: &#34;int16&#34;,
-        &#34;ModTmpMaxStr&#34;: &#34;uint16&#34;,
-        &#34;ModTmpMaxMod&#34;: &#34;uint16&#34;,
-        &#34;ModTmpMin&#34;: &#34;int16&#34;,
-        &#34;ModTmpMinStr&#34;: &#34;uint16&#34;,
-        &#34;ModTmpMinMod&#34;: &#34;uint16&#34;,
-        &#34;ModTmpAvg&#34;: &#34;uint16&#34;,
-        &#34;StrVMax&#34;: &#34;uint16&#34;,
-        &#34;StrVMaxStr&#34;: &#34;uint16&#34;,
-        &#34;StrVMin&#34;: &#34;uint16&#34;,
-        &#34;StrVMinStr&#34;: &#34;uint16&#34;,
-        &#34;StrVAvg&#34;: &#34;uint16&#34;,
-        &#34;StrAMax&#34;: &#34;int16&#34;,
-        &#34;StrAMaxStr&#34;: &#34;uint16&#34;,
-        &#34;StrAMin&#34;: &#34;int16&#34;,
-        &#34;StrAMinStr&#34;: &#34;uint16&#34;,
-        &#34;StrAAvg&#34;: &#34;int16&#34;,
-        &#34;NCellBal&#34;: &#34;uint16&#34;
-      },
-      &#34;repeating&#34;: {
-        &#34;0&#34;: {
-          &#34;StrNMod&#34;: &#34;uint16&#34;,
-          &#34;StrSt&#34;: &#34;bitfield32&#34;,
-          &#34;StrConFail&#34;: &#34;enum16&#34;,
-          &#34;StrSoC&#34;: &#34;uint16&#34;,
-          &#34;StrSoH&#34;: &#34;uint16&#34;,
-          &#34;StrA&#34;: &#34;int16&#34;,
-          &#34;StrCellVMax&#34;: &#34;uint16&#34;,
-          &#34;StrCellVMaxMod&#34;: &#34;uint16&#34;,
-          &#34;StrCellVMin&#34;: &#34;uint16&#34;,
-          &#34;StrCellVMinMod&#34;: &#34;uint16&#34;,
-          &#34;StrCellVAvg&#34;: &#34;uint16&#34;,
-          &#34;StrModTmpMax&#34;: &#34;int16&#34;,
-          &#34;StrModTmpMaxMod&#34;: &#34;uint16&#34;,
-          &#34;StrModTmpMin&#34;: &#34;int16&#34;,
-          &#34;StrModTmpMinMod&#34;: &#34;uint16&#34;,
-          &#34;StrModTmpAvg&#34;: &#34;int16&#34;,
-          &#34;StrDisRsn&#34;: &#34;enum16&#34;,
-          &#34;StrConSt&#34;: &#34;bitfield32&#34;,
-          &#34;StrEvt1&#34;: &#34;bitfield32&#34;,
-          &#34;StrEvt2&#34;: &#34;bitfield32&#34;,
-          &#34;StrEvtVnd1&#34;: &#34;bitfield32&#34;,
-          &#34;StrEvtVnd2&#34;: &#34;bitfield32&#34;,
-          &#34;StrSetEna&#34;: &#34;enum16&#34;,
-          &#34;StrSetCon&#34;: &#34;enum16&#34;
-        }
-      },
-      &#34;id&#34;: 803
+    &#34;id&#34;: 802
+  },
+  &#34;1&#34;: {
+    &#34;fixed&#34;: {
+      &#34;NStr&#34;: &#34;uint16&#34;,
+      &#34;NStrCon&#34;: &#34;uint16&#34;,
+      &#34;ModTmpMax&#34;: &#34;int16&#34;,
+      &#34;ModTmpMaxStr&#34;: &#34;uint16&#34;,
+      &#34;ModTmpMaxMod&#34;: &#34;uint16&#34;,
+      &#34;ModTmpMin&#34;: &#34;int16&#34;,
+      &#34;ModTmpMinStr&#34;: &#34;uint16&#34;,
+      &#34;ModTmpMinMod&#34;: &#34;uint16&#34;,
+      &#34;ModTmpAvg&#34;: &#34;uint16&#34;,
+      &#34;StrVMax&#34;: &#34;uint16&#34;,
+      &#34;StrVMaxStr&#34;: &#34;uint16&#34;,
+      &#34;StrVMin&#34;: &#34;uint16&#34;,
+      &#34;StrVMinStr&#34;: &#34;uint16&#34;,
+      &#34;StrVAvg&#34;: &#34;uint16&#34;,
+      &#34;StrAMax&#34;: &#34;int16&#34;,
+      &#34;StrAMaxStr&#34;: &#34;uint16&#34;,
+      &#34;StrAMin&#34;: &#34;int16&#34;,
+      &#34;StrAMinStr&#34;: &#34;uint16&#34;,
+      &#34;StrAAvg&#34;: &#34;int16&#34;,
+      &#34;NCellBal&#34;: &#34;uint16&#34;
     },
-    &#34;2&#34;: {
-      &#34;fixed&#34;: {
-        &#34;StrIdx&#34;: &#34;uint16&#34;,
-        &#34;ModIdx&#34;: &#34;uint16&#34;,
-        &#34;NCell&#34;: &#34;uint16&#34;,
-        &#34;SoC&#34;: &#34;uint16&#34;,
-        &#34;DoD&#34;: &#34;uint16&#34;,
-        &#34;SoH&#34;: &#34;uint16&#34;,
-        &#34;NCyc&#34;: &#34;uint32&#34;,
-        &#34;V&#34;: &#34;uint16&#34;,
-        &#34;CellVMax&#34;: &#34;uint16&#34;,
-        &#34;CellVMaxCell&#34;: &#34;uint16&#34;,
-        &#34;CellVMin&#34;: &#34;uint16&#34;,
-        &#34;CellVMinCell&#34;: &#34;uint16&#34;,
-        &#34;CellVAvg&#34;: &#34;uint16&#34;,
-        &#34;CellTmpMax&#34;: &#34;int16&#34;,
-        &#34;CellTmpMaxCell&#34;: &#34;uint16&#34;,
-        &#34;CellTmpMin&#34;: &#34;int16&#34;,
-        &#34;CellTmpMinCell&#34;: &#34;uint16&#34;,
-        &#34;CellTmpAvg&#34;: &#34;int16&#34;,
-        &#34;NCellBal&#34;: &#34;uint16&#34;,
-        &#34;SN&#34;: &#34;string&#34;
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {
+        &#34;StrNMod&#34;: &#34;uint16&#34;,
+        &#34;StrSt&#34;: &#34;bitfield32&#34;,
+        &#34;StrConFail&#34;: &#34;enum16&#34;,
+        &#34;StrSoC&#34;: &#34;uint16&#34;,
+        &#34;StrSoH&#34;: &#34;uint16&#34;,
+        &#34;StrA&#34;: &#34;int16&#34;,
+        &#34;StrCellVMax&#34;: &#34;uint16&#34;,
+        &#34;StrCellVMaxMod&#34;: &#34;uint16&#34;,
+        &#34;StrCellVMin&#34;: &#34;uint16&#34;,
+        &#34;StrCellVMinMod&#34;: &#34;uint16&#34;,
+        &#34;StrCellVAvg&#34;: &#34;uint16&#34;,
+        &#34;StrModTmpMax&#34;: &#34;int16&#34;,
+        &#34;StrModTmpMaxMod&#34;: &#34;uint16&#34;,
+        &#34;StrModTmpMin&#34;: &#34;int16&#34;,
+        &#34;StrModTmpMinMod&#34;: &#34;uint16&#34;,
+        &#34;StrModTmpAvg&#34;: &#34;int16&#34;,
+        &#34;StrDisRsn&#34;: &#34;enum16&#34;,
+        &#34;StrConSt&#34;: &#34;bitfield32&#34;,
+        &#34;StrEvt1&#34;: &#34;bitfield32&#34;,
+        &#34;StrEvt2&#34;: &#34;bitfield32&#34;,
+        &#34;StrEvtVnd1&#34;: &#34;bitfield32&#34;,
+        &#34;StrEvtVnd2&#34;: &#34;bitfield32&#34;,
+        &#34;StrSetEna&#34;: &#34;enum16&#34;,
+        &#34;StrSetCon&#34;: &#34;enum16&#34;
+      }
+    },
+    &#34;id&#34;: 803
+  },
+  &#34;2&#34;: {
+    &#34;fixed&#34;: {
+      &#34;StrIdx&#34;: &#34;uint16&#34;,
+      &#34;ModIdx&#34;: &#34;uint16&#34;,
+      &#34;NCell&#34;: &#34;uint16&#34;,
+      &#34;SoC&#34;: &#34;uint16&#34;,
+      &#34;DoD&#34;: &#34;uint16&#34;,
+      &#34;SoH&#34;: &#34;uint16&#34;,
+      &#34;NCyc&#34;: &#34;uint32&#34;,
+      &#34;V&#34;: &#34;uint16&#34;,
+      &#34;CellVMax&#34;: &#34;uint16&#34;,
+      &#34;CellVMaxCell&#34;: &#34;uint16&#34;,
+      &#34;CellVMin&#34;: &#34;uint16&#34;,
+      &#34;CellVMinCell&#34;: &#34;uint16&#34;,
+      &#34;CellVAvg&#34;: &#34;uint16&#34;,
+      &#34;CellTmpMax&#34;: &#34;int16&#34;,
+      &#34;CellTmpMaxCell&#34;: &#34;uint16&#34;,
+      &#34;CellTmpMin&#34;: &#34;int16&#34;,
+      &#34;CellTmpMinCell&#34;: &#34;uint16&#34;,
+      &#34;CellTmpAvg&#34;: &#34;int16&#34;,
+      &#34;NCellBal&#34;: &#34;uint16&#34;,
+      &#34;SN&#34;: &#34;string&#34;
+    },
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
       },
-      &#34;repeating&#34;: {
-        &#34;0&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;1&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;2&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;3&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;4&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;5&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;6&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;7&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;8&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;9&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;10&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;11&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;12&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;13&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;14&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        },
-        &#34;15&#34;: {
-          &#34;CellV&#34;: &#34;uint16&#34;,
-          &#34;CellTmp&#34;: &#34;int16&#34;,
-          &#34;CellSt&#34;: &#34;bitfield32&#34;
-        }
+      &#34;1&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
       },
-      &#34;id&#34;: 805
-    }
+      &#34;2&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;3&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;4&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;5&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;6&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;7&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;8&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;9&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;10&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;11&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;12&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;13&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;14&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      },
+      &#34;15&#34;: {
+        &#34;CellV&#34;: &#34;uint16&#34;,
+        &#34;CellTmp&#34;: &#34;int16&#34;,
+        &#34;CellSt&#34;: &#34;bitfield32&#34;
+      }
+    },
+    &#34;id&#34;: 805
   }
 }
 </pre>
@@ -781,216 +775,214 @@ nb_path: "nbs/index.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{
-  &#34;sunspec&#34;: {
-    &#34;0&#34;: {
-      &#34;fixed&#34;: {
-        &#34;AHRtg&#34;: 65535,
-        &#34;WHRtg&#34;: 65535,
-        &#34;WChaRteMax&#34;: 65535,
-        &#34;WDisChaRteMax&#34;: 65535,
-        &#34;DisChaRte&#34;: 65535,
-        &#34;SoCMax&#34;: 65535,
-        &#34;SoCMin&#34;: 65535,
-        &#34;SocRsvMax&#34;: 65535,
-        &#34;SoCRsvMin&#34;: 65535,
-        &#34;SoC&#34;: 480,
-        &#34;DoD&#34;: 65535,
-        &#34;SoH&#34;: 65535,
-        &#34;NCyc&#34;: 4294967295,
-        &#34;ChaSt&#34;: 65535,
-        &#34;LocRemCtl&#34;: 65535,
-        &#34;Hb&#34;: 65535,
-        &#34;CtrlHb&#34;: 65535,
-        &#34;AlmRst&#34;: 65535,
-        &#34;Typ&#34;: 65535,
-        &#34;State&#34;: 65535,
-        &#34;StateVnd&#34;: 65535,
-        &#34;WarrDt&#34;: 4294967295,
-        &#34;Evt1&#34;: 4294967295,
-        &#34;Evt2&#34;: 4294967295,
-        &#34;EvtVnd1&#34;: 4294967295,
-        &#34;EvtVnd2&#34;: 4294967295,
-        &#34;V&#34;: 492,
-        &#34;VMax&#34;: 65535,
-        &#34;VMin&#34;: 65535,
-        &#34;CellVMax&#34;: 65535,
-        &#34;CellVMaxStr&#34;: 65535,
-        &#34;CellVMaxMod&#34;: 65535,
-        &#34;CellVMin&#34;: 65535,
-        &#34;CellVMinStr&#34;: 65535,
-        &#34;CellVMinMod&#34;: 65535,
-        &#34;CellVAvg&#34;: 65535,
-        &#34;A&#34;: 428,
-        &#34;AChaMax&#34;: 65535,
-        &#34;ADisChaMax&#34;: 65535,
-        &#34;W&#34;: 253,
-        &#34;ReqInvState&#34;: 65535,
-        &#34;ReqW&#34;: -32768,
-        &#34;SetOp&#34;: 65535,
-        &#34;SetInvState&#34;: 65535
-      },
-      &#34;id&#34;: 802
+  &#34;0&#34;: {
+    &#34;fixed&#34;: {
+      &#34;AHRtg&#34;: 65535,
+      &#34;WHRtg&#34;: 65535,
+      &#34;WChaRteMax&#34;: 65535,
+      &#34;WDisChaRteMax&#34;: 65535,
+      &#34;DisChaRte&#34;: 65535,
+      &#34;SoCMax&#34;: 65535,
+      &#34;SoCMin&#34;: 65535,
+      &#34;SocRsvMax&#34;: 65535,
+      &#34;SoCRsvMin&#34;: 65535,
+      &#34;SoC&#34;: 489,
+      &#34;DoD&#34;: 65535,
+      &#34;SoH&#34;: 65535,
+      &#34;NCyc&#34;: 4294967295,
+      &#34;ChaSt&#34;: 65535,
+      &#34;LocRemCtl&#34;: 65535,
+      &#34;Hb&#34;: 65535,
+      &#34;CtrlHb&#34;: 65535,
+      &#34;AlmRst&#34;: 65535,
+      &#34;Typ&#34;: 65535,
+      &#34;State&#34;: 65535,
+      &#34;StateVnd&#34;: 65535,
+      &#34;WarrDt&#34;: 4294967295,
+      &#34;Evt1&#34;: 4294967295,
+      &#34;Evt2&#34;: 4294967295,
+      &#34;EvtVnd1&#34;: 4294967295,
+      &#34;EvtVnd2&#34;: 4294967295,
+      &#34;V&#34;: 495,
+      &#34;VMax&#34;: 65535,
+      &#34;VMin&#34;: 65535,
+      &#34;CellVMax&#34;: 65535,
+      &#34;CellVMaxStr&#34;: 65535,
+      &#34;CellVMaxMod&#34;: 65535,
+      &#34;CellVMin&#34;: 65535,
+      &#34;CellVMinStr&#34;: 65535,
+      &#34;CellVMinMod&#34;: 65535,
+      &#34;CellVAvg&#34;: 65535,
+      &#34;A&#34;: 409,
+      &#34;AChaMax&#34;: 65535,
+      &#34;ADisChaMax&#34;: 65535,
+      &#34;W&#34;: 358,
+      &#34;ReqInvState&#34;: 65535,
+      &#34;ReqW&#34;: -32768,
+      &#34;SetOp&#34;: 65535,
+      &#34;SetInvState&#34;: 65535
     },
-    &#34;1&#34;: {
-      &#34;fixed&#34;: {
-        &#34;NStr&#34;: 65535,
-        &#34;NStrCon&#34;: 65535,
-        &#34;ModTmpMax&#34;: -32768,
-        &#34;ModTmpMaxStr&#34;: 65535,
-        &#34;ModTmpMaxMod&#34;: 65535,
-        &#34;ModTmpMin&#34;: -32768,
-        &#34;ModTmpMinStr&#34;: 65535,
-        &#34;ModTmpMinMod&#34;: 65535,
-        &#34;ModTmpAvg&#34;: 65535,
-        &#34;StrVMax&#34;: 65535,
-        &#34;StrVMaxStr&#34;: 65535,
-        &#34;StrVMin&#34;: 65535,
-        &#34;StrVMinStr&#34;: 65535,
-        &#34;StrVAvg&#34;: 65535,
-        &#34;StrAMax&#34;: -32768,
-        &#34;StrAMaxStr&#34;: 65535,
-        &#34;StrAMin&#34;: -32768,
-        &#34;StrAMinStr&#34;: 65535,
-        &#34;StrAAvg&#34;: -32768,
-        &#34;NCellBal&#34;: 65535
-      },
-      &#34;repeating&#34;: {
-        &#34;0&#34;: {
-          &#34;StrNMod&#34;: 65535,
-          &#34;StrSt&#34;: 4294967295,
-          &#34;StrConFail&#34;: 65535,
-          &#34;StrSoC&#34;: 65535,
-          &#34;StrSoH&#34;: 65535,
-          &#34;StrA&#34;: -32768,
-          &#34;StrCellVMax&#34;: 65535,
-          &#34;StrCellVMaxMod&#34;: 65535,
-          &#34;StrCellVMin&#34;: 65535,
-          &#34;StrCellVMinMod&#34;: 65535,
-          &#34;StrCellVAvg&#34;: 65535,
-          &#34;StrModTmpMax&#34;: -32768,
-          &#34;StrModTmpMaxMod&#34;: 65535,
-          &#34;StrModTmpMin&#34;: -32768,
-          &#34;StrModTmpMinMod&#34;: 65535,
-          &#34;StrModTmpAvg&#34;: -32768,
-          &#34;StrDisRsn&#34;: 65535,
-          &#34;StrConSt&#34;: 4294967295,
-          &#34;StrEvt1&#34;: 4294967295,
-          &#34;StrEvt2&#34;: 4294967295,
-          &#34;StrEvtVnd1&#34;: 4294967295,
-          &#34;StrEvtVnd2&#34;: 4294967295,
-          &#34;StrSetEna&#34;: 65535,
-          &#34;StrSetCon&#34;: 65535
-        }
-      },
-      &#34;id&#34;: 803
+    &#34;id&#34;: 802
+  },
+  &#34;1&#34;: {
+    &#34;fixed&#34;: {
+      &#34;NStr&#34;: 65535,
+      &#34;NStrCon&#34;: 65535,
+      &#34;ModTmpMax&#34;: -32768,
+      &#34;ModTmpMaxStr&#34;: 65535,
+      &#34;ModTmpMaxMod&#34;: 65535,
+      &#34;ModTmpMin&#34;: -32768,
+      &#34;ModTmpMinStr&#34;: 65535,
+      &#34;ModTmpMinMod&#34;: 65535,
+      &#34;ModTmpAvg&#34;: 65535,
+      &#34;StrVMax&#34;: 65535,
+      &#34;StrVMaxStr&#34;: 65535,
+      &#34;StrVMin&#34;: 65535,
+      &#34;StrVMinStr&#34;: 65535,
+      &#34;StrVAvg&#34;: 65535,
+      &#34;StrAMax&#34;: -32768,
+      &#34;StrAMaxStr&#34;: 65535,
+      &#34;StrAMin&#34;: -32768,
+      &#34;StrAMinStr&#34;: 65535,
+      &#34;StrAAvg&#34;: -32768,
+      &#34;NCellBal&#34;: 65535
     },
-    &#34;2&#34;: {
-      &#34;fixed&#34;: {
-        &#34;StrIdx&#34;: 1,
-        &#34;ModIdx&#34;: 65535,
-        &#34;NCell&#34;: 16,
-        &#34;SoC&#34;: 65535,
-        &#34;DoD&#34;: 65535,
-        &#34;SoH&#34;: 65535,
-        &#34;NCyc&#34;: 4294967295,
-        &#34;V&#34;: 511,
-        &#34;CellVMax&#34;: 65535,
-        &#34;CellVMaxCell&#34;: 65535,
-        &#34;CellVMin&#34;: 65535,
-        &#34;CellVMinCell&#34;: 65535,
-        &#34;CellVAvg&#34;: 65535,
-        &#34;CellTmpMax&#34;: -32768,
-        &#34;CellTmpMaxCell&#34;: 65535,
-        &#34;CellTmpMin&#34;: -32768,
-        &#34;CellTmpMinCell&#34;: 65535,
-        &#34;CellTmpAvg&#34;: -32768,
-        &#34;NCellBal&#34;: 65535,
-        &#34;SN&#34;: 0
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {
+        &#34;StrNMod&#34;: 65535,
+        &#34;StrSt&#34;: 4294967295,
+        &#34;StrConFail&#34;: 65535,
+        &#34;StrSoC&#34;: 65535,
+        &#34;StrSoH&#34;: 65535,
+        &#34;StrA&#34;: -32768,
+        &#34;StrCellVMax&#34;: 65535,
+        &#34;StrCellVMaxMod&#34;: 65535,
+        &#34;StrCellVMin&#34;: 65535,
+        &#34;StrCellVMinMod&#34;: 65535,
+        &#34;StrCellVAvg&#34;: 65535,
+        &#34;StrModTmpMax&#34;: -32768,
+        &#34;StrModTmpMaxMod&#34;: 65535,
+        &#34;StrModTmpMin&#34;: -32768,
+        &#34;StrModTmpMinMod&#34;: 65535,
+        &#34;StrModTmpAvg&#34;: -32768,
+        &#34;StrDisRsn&#34;: 65535,
+        &#34;StrConSt&#34;: 4294967295,
+        &#34;StrEvt1&#34;: 4294967295,
+        &#34;StrEvt2&#34;: 4294967295,
+        &#34;StrEvtVnd1&#34;: 4294967295,
+        &#34;StrEvtVnd2&#34;: 4294967295,
+        &#34;StrSetEna&#34;: 65535,
+        &#34;StrSetCon&#34;: 65535
+      }
+    },
+    &#34;id&#34;: 803
+  },
+  &#34;2&#34;: {
+    &#34;fixed&#34;: {
+      &#34;StrIdx&#34;: 1,
+      &#34;ModIdx&#34;: 65535,
+      &#34;NCell&#34;: 16,
+      &#34;SoC&#34;: 65535,
+      &#34;DoD&#34;: 65535,
+      &#34;SoH&#34;: 65535,
+      &#34;NCyc&#34;: 4294967295,
+      &#34;V&#34;: 508,
+      &#34;CellVMax&#34;: 65535,
+      &#34;CellVMaxCell&#34;: 65535,
+      &#34;CellVMin&#34;: 65535,
+      &#34;CellVMinCell&#34;: 65535,
+      &#34;CellVAvg&#34;: 65535,
+      &#34;CellTmpMax&#34;: -32768,
+      &#34;CellTmpMaxCell&#34;: 65535,
+      &#34;CellTmpMin&#34;: -32768,
+      &#34;CellTmpMinCell&#34;: 65535,
+      &#34;CellTmpAvg&#34;: -32768,
+      &#34;NCellBal&#34;: 65535,
+      &#34;SN&#34;: 0
+    },
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {
+        &#34;CellV&#34;: 303,
+        &#34;CellTmp&#34;: 306,
+        &#34;CellSt&#34;: 0
       },
-      &#34;repeating&#34;: {
-        &#34;0&#34;: {
-          &#34;CellV&#34;: 304,
-          &#34;CellTmp&#34;: 309,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;1&#34;: {
-          &#34;CellV&#34;: 317,
-          &#34;CellTmp&#34;: 307,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;2&#34;: {
-          &#34;CellV&#34;: 287,
-          &#34;CellTmp&#34;: 309,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;3&#34;: {
-          &#34;CellV&#34;: 291,
-          &#34;CellTmp&#34;: 321,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;4&#34;: {
-          &#34;CellV&#34;: 288,
-          &#34;CellTmp&#34;: 308,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;5&#34;: {
-          &#34;CellV&#34;: 307,
-          &#34;CellTmp&#34;: 335,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;6&#34;: {
-          &#34;CellV&#34;: 318,
-          &#34;CellTmp&#34;: 322,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;7&#34;: {
-          &#34;CellV&#34;: 312,
-          &#34;CellTmp&#34;: 306,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;8&#34;: {
-          &#34;CellV&#34;: 302,
-          &#34;CellTmp&#34;: 335,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;9&#34;: {
-          &#34;CellV&#34;: 283,
-          &#34;CellTmp&#34;: 338,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;10&#34;: {
-          &#34;CellV&#34;: 312,
-          &#34;CellTmp&#34;: 326,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;11&#34;: {
-          &#34;CellV&#34;: 320,
-          &#34;CellTmp&#34;: 339,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;12&#34;: {
-          &#34;CellV&#34;: 318,
-          &#34;CellTmp&#34;: 300,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;13&#34;: {
-          &#34;CellV&#34;: 327,
-          &#34;CellTmp&#34;: 321,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;14&#34;: {
-          &#34;CellV&#34;: 291,
-          &#34;CellTmp&#34;: 332,
-          &#34;CellSt&#34;: 0
-        },
-        &#34;15&#34;: {
-          &#34;CellV&#34;: 288,
-          &#34;CellTmp&#34;: 329,
-          &#34;CellSt&#34;: 0
-        }
+      &#34;1&#34;: {
+        &#34;CellV&#34;: 294,
+        &#34;CellTmp&#34;: 327,
+        &#34;CellSt&#34;: 0
       },
-      &#34;id&#34;: 805
-    }
+      &#34;2&#34;: {
+        &#34;CellV&#34;: 292,
+        &#34;CellTmp&#34;: 300,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;3&#34;: {
+        &#34;CellV&#34;: 280,
+        &#34;CellTmp&#34;: 310,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;4&#34;: {
+        &#34;CellV&#34;: 299,
+        &#34;CellTmp&#34;: 303,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;5&#34;: {
+        &#34;CellV&#34;: 292,
+        &#34;CellTmp&#34;: 305,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;6&#34;: {
+        &#34;CellV&#34;: 292,
+        &#34;CellTmp&#34;: 320,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;7&#34;: {
+        &#34;CellV&#34;: 305,
+        &#34;CellTmp&#34;: 324,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;8&#34;: {
+        &#34;CellV&#34;: 288,
+        &#34;CellTmp&#34;: 326,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;9&#34;: {
+        &#34;CellV&#34;: 312,
+        &#34;CellTmp&#34;: 322,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;10&#34;: {
+        &#34;CellV&#34;: 297,
+        &#34;CellTmp&#34;: 325,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;11&#34;: {
+        &#34;CellV&#34;: 290,
+        &#34;CellTmp&#34;: 339,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;12&#34;: {
+        &#34;CellV&#34;: 290,
+        &#34;CellTmp&#34;: 329,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;13&#34;: {
+        &#34;CellV&#34;: 320,
+        &#34;CellTmp&#34;: 308,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;14&#34;: {
+        &#34;CellV&#34;: 319,
+        &#34;CellTmp&#34;: 320,
+        &#34;CellSt&#34;: 0
+      },
+      &#34;15&#34;: {
+        &#34;CellV&#34;: 283,
+        &#34;CellTmp&#34;: 302,
+        &#34;CellSt&#34;: 0
+      }
+    },
+    &#34;id&#34;: 805
   }
 }
 </pre>
