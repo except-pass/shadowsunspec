@@ -10,6 +10,19 @@ This document explains how to serialize data from a sunspec-compliant battery en
 
 This repo depends on [pysunspec](https://github.com/sunspec/pysunspec).  If you want to be able to run the examples you need all the submodules.  Make sure to clone with the `--recursive` flag.
 
+```
+git clone --recurse-submodules <repository url>
+```
+
+### How to run these examples
+
+You can run these examples yourself, or build your own models in python.  After you clone the repository:
+```
+make env
+make server
+```
+will start a jupyter lab server with this package installed.
+
 ## Background
 
 ### Audience
@@ -155,6 +168,12 @@ A `Model` is made up of one or more point groups.  There will always be a fixed 
 }
 ```
 
+## Read only vs. Writable points
+
+Because of technical limitations with the shadow, we'll separate out the writable and read only points. The max size of a given named shadow is only 30k (and that's only if you ask AWS for an extension).  Also the update chunk size is only 1k, and updating shadows is more expensive than publishing a normal MQTT message.
+
+By keeping the writable points in the shadow we can still make use of the powerful state tracking and "desired" shadow features of the IOT Shadow, but only where they are needed.
+
 ## Example Implementation
 
 ### Simple Example
@@ -193,6 +212,8 @@ These are the relevant sunspec models
 The cells are a repeating point group within the module model.  For brevity sake we'll only cover a subset of the points.
 
 In this case we only need model `802` to cover the whole bank, and we need one model `805` for each module.  The other models are redundant and will not be included.
+
+We'll consider a few read-only points.  The telemetry model then becomes.
 
 ```json
 {
@@ -269,18 +290,85 @@ The eVault product has 16 cells, 1 module, and 1 string.  We include model
 - 803: contains summary level data on the string in the repeating block.  That summary data has the Contactor Status, which is important to Fortress Engineers.
 - 805: Module and cell level data.
 
-We can generate the full shadow sunspec along with datatypes.
+We can generate the shadow sunspec along with datatypes.
 
 ```python
 import json
 from pprint import pprint
-from shadowsunspec.factory import assemble, ShadowSunspecEncoder
+from shadowsunspec.factory import assemble, ShadowSunspecEncoder, TelemetrySunspecEncoder
+import shadowsunspec.factory as factory
 example_device = assemble([
         {'mid': 802}, 
         {'mid': 803},
         {'mid': 805, 'repeating': 16}])
 
-print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
+#dumped_shadow = (json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
+dumped_shadow = factory.encode(example_device, using=ShadowSunspecEncoder, as_obj=True)
+print(json.dumps(dumped_shadow, indent=2))
+```
+
+    {
+      "0": {
+        "fixed": {
+          "SocRsvMax": "uint16",
+          "SoCRsvMin": "uint16",
+          "CtrlHb": "uint16",
+          "AlmRst": "uint16",
+          "SetOp": "enum16",
+          "SetInvState": "enum16"
+        },
+        "id": 802
+      },
+      "1": {
+        "fixed": {},
+        "repeating": {
+          "0": {
+            "StrSetEna": "enum16",
+            "StrSetCon": "enum16"
+          }
+        },
+        "id": 803
+      },
+      "2": {
+        "fixed": {},
+        "repeating": {
+          "0": {},
+          "1": {},
+          "2": {},
+          "3": {},
+          "4": {},
+          "5": {},
+          "6": {},
+          "7": {},
+          "8": {},
+          "9": {},
+          "10": {},
+          "11": {},
+          "12": {},
+          "13": {},
+          "14": {},
+          "15": {}
+        },
+        "id": 805
+      }
+    }
+
+
+This shadow does not take up much space relative to the 30k limit.
+
+```python
+from sys import getsizeof
+print("Shadow is", getsizeof(json.dumps(dumped_shadow), "bytes"))
+```
+
+    Shadow is 503
+
+
+The points needed for telemetry are
+
+```python
+dumped_telem = factory.encode(example_device, using=TelemetrySunspecEncoder, as_obj=True)
+print(json.dumps(dumped_telem, indent=2))
 ```
 
     {
@@ -293,8 +381,6 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
           "DisChaRte": "uint16",
           "SoCMax": "uint16",
           "SoCMin": "uint16",
-          "SocRsvMax": "uint16",
-          "SoCRsvMin": "uint16",
           "SoC": "uint16",
           "DoD": "uint16",
           "SoH": "uint16",
@@ -302,8 +388,6 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
           "ChaSt": "enum16",
           "LocRemCtl": "enum16",
           "Hb": "uint16",
-          "CtrlHb": "uint16",
-          "AlmRst": "uint16",
           "Typ": "enum16",
           "State": "enum16",
           "StateVnd": "enum16",
@@ -327,9 +411,7 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
           "ADisChaMax": "uint16",
           "W": "int16",
           "ReqInvState": "enum16",
-          "ReqW": "int16",
-          "SetOp": "enum16",
-          "SetInvState": "enum16"
+          "ReqW": "int16"
         },
         "id": 802
       },
@@ -379,9 +461,7 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
             "StrEvt1": "bitfield32",
             "StrEvt2": "bitfield32",
             "StrEvtVnd1": "bitfield32",
-            "StrEvtVnd2": "bitfield32",
-            "StrSetEna": "enum16",
-            "StrSetCon": "enum16"
+            "StrEvtVnd2": "bitfield32"
           }
         },
         "id": 803
@@ -495,6 +575,16 @@ print(json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))
       }
     }
 
+
+```python
+from sys import getsizeof
+print("Telemetry is", getsizeof(json.dumps(dumped_telem)), "bytes")
+```
+
+    Telemetry is 3501 bytes
+
+
+## Example using numbers instead of data types
 
 If you want to see some example values instead you can do the following.  Note that [data points that are not "Mandatory" will use these values to show that they are unimplemented.  ](https://github.com/sunspec/pysunspec/blob/master/sunspec/core/suns.py).  In this example, we will show dummy data in the following points (written as `model_id.symbol`).
 

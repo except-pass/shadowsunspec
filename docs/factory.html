@@ -47,7 +47,7 @@ nb_path: "nbs/factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="list_to_indexdir" class="doc_header"><code>list_to_indexdir</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>list_to_indexdir</code>(<strong><code>lst</code></strong>)</p>
+<h4 id="list_to_indexdir" class="doc_header"><code>list_to_indexdir</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>list_to_indexdir</code>(<strong><code>lst</code></strong>)</p>
 </blockquote>
 <p>Transforms a list into a dictionary with
 {list index: list value}</p>
@@ -104,7 +104,7 @@ nb_path: "nbs/factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_model" class="doc_header"><code>create_model</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_model</code>(<strong><code>device_object</code></strong>, <strong><code>mid</code></strong>, <strong><code>repeating</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="create_model" class="doc_header"><code>create_model</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_model</code>(<strong><code>device_object</code></strong>, <strong><code>mid</code></strong>, <strong><code>repeating</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -128,7 +128,7 @@ nb_path: "nbs/factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="assemble_sunspec_model" class="doc_header"><code>assemble_sunspec_model</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assemble_sunspec_model</code>(<strong><code>model_definitions</code></strong>, <strong><code>device_object</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="assemble_sunspec_model" class="doc_header"><code>assemble_sunspec_model</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>assemble_sunspec_model</code>(<strong><code>model_definitions</code></strong>, <strong><code>device_object</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -182,7 +182,7 @@ nb_path: "nbs/factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ShadowSunspecEncoder" class="doc_header"><code>class</code> <code>ShadowSunspecEncoder</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L48" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ShadowSunspecEncoder</code>(<strong><code>skipkeys</code></strong>=<em><code>False</code></em>, <strong><code>ensure_ascii</code></strong>=<em><code>True</code></em>, <strong><code>check_circular</code></strong>=<em><code>True</code></em>, <strong><code>allow_nan</code></strong>=<em><code>True</code></em>, <strong><code>sort_keys</code></strong>=<em><code>False</code></em>, <strong><code>indent</code></strong>=<em><code>None</code></em>, <strong><code>separators</code></strong>=<em><code>None</code></em>, <strong><code>default</code></strong>=<em><code>None</code></em>) :: <code>JSONEncoder</code></p>
+<h2 id="GeneralSunspecEncoder" class="doc_header"><code>class</code> <code>GeneralSunspecEncoder</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L53" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GeneralSunspecEncoder</code>(<strong><code>skipkeys</code></strong>=<em><code>False</code></em>, <strong><code>ensure_ascii</code></strong>=<em><code>True</code></em>, <strong><code>check_circular</code></strong>=<em><code>True</code></em>, <strong><code>allow_nan</code></strong>=<em><code>True</code></em>, <strong><code>sort_keys</code></strong>=<em><code>False</code></em>, <strong><code>indent</code></strong>=<em><code>None</code></em>, <strong><code>separators</code></strong>=<em><code>None</code></em>, <strong><code>default</code></strong>=<em><code>None</code></em>) :: <code>JSONEncoder</code></p>
 </blockquote>
 <p>Recursively json encodes a sunspec model into a shadow-sunspec compliant object
 Note that if the top level object is a list you will not get a index-dir as defined above.</p>
@@ -217,8 +217,11 @@ It contains the datatype as the value instead of the actual modbus or canbus dat
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="encode" class="doc_header"><code>encode</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode</code>(<strong><code>obj</code></strong>, <strong><code>as_obj</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="encode" class="doc_header"><code>encode</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L127" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encode</code>(<strong><code>obj</code></strong>, <strong><code>using</code></strong>=<em><code>GeneralSunspecEncoder</code></em>, <strong><code>as_obj</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
+<p>Syntactic sugar around a json dump operation.
+using: use this class to json encode
+as_obj: Return a python object.  If false, return a json string</p>
 
 </div>
 
@@ -245,7 +248,44 @@ It contains the datatype as the value instead of the actual modbus or canbus dat
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">([{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">802</span><span class="p">}])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">expected_model802_points</span><span class="o">=</span><span class="mi">44</span>
+<span class="n">TESTCASE</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dev</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">802</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">points_list</span><span class="p">),</span> <span class="n">expected_model802_points</span><span class="p">)</span>
+<span class="n">TESTCASE</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded</span><span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">][</span><span class="s1">&#39;fixed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">expected_model802_points</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">encode</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -313,6 +353,105 @@ It contains the datatype as the value instead of the actual modbus or canbus dat
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Splitting-the-Sunspec">Splitting the Sunspec<a class="anchor-link" href="#Splitting-the-Sunspec"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Because of technical limitations with the shadow, we'll separate out the writable and read only points. The max size of a given named shadow is only 30k (and that's only if you ask AWS for an extension).  Also the update chunk size is only 1k, and updating shadows is more expensive than sending a normal MQTT message.</p>
+<p>By keeping the writable points in the shadow we can still make use of the powerful state tracking and "desired" shadow features of the IOT Shadow, but only where they are needed.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="TelemetrySunspecEncoder" class="doc_header"><code>class</code> <code>TelemetrySunspecEncoder</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L140" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>TelemetrySunspecEncoder</code>(<strong><code>skipkeys</code></strong>=<em><code>False</code></em>, <strong><code>ensure_ascii</code></strong>=<em><code>True</code></em>, <strong><code>check_circular</code></strong>=<em><code>True</code></em>, <strong><code>allow_nan</code></strong>=<em><code>True</code></em>, <strong><code>sort_keys</code></strong>=<em><code>False</code></em>, <strong><code>indent</code></strong>=<em><code>None</code></em>, <strong><code>separators</code></strong>=<em><code>None</code></em>, <strong><code>default</code></strong>=<em><code>None</code></em>) :: <a href="/shadowsunspec/factory.html#GeneralSunspecEncoder"><code>GeneralSunspecEncoder</code></a></p>
+</blockquote>
+<p>Recursively json encodes a sunspec model into a shadow-sunspec compliant object
+Note that if the top level object is a list you will not get a index-dir as defined above.</p>
+<p>This class returns an example dictionary.  It is made for communication purposes.
+It contains the datatype as the value instead of the actual modbus or canbus data.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="ShadowSunspecEncoder" class="doc_header"><code>class</code> <code>ShadowSunspecEncoder</code><a href="https://github.com/WilliamG/shadowsunspec/tree/master/shadowsunspec/factory.py#L144" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ShadowSunspecEncoder</code>(<strong><code>skipkeys</code></strong>=<em><code>False</code></em>, <strong><code>ensure_ascii</code></strong>=<em><code>True</code></em>, <strong><code>check_circular</code></strong>=<em><code>True</code></em>, <strong><code>allow_nan</code></strong>=<em><code>True</code></em>, <strong><code>sort_keys</code></strong>=<em><code>False</code></em>, <strong><code>indent</code></strong>=<em><code>None</code></em>, <strong><code>separators</code></strong>=<em><code>None</code></em>, <strong><code>default</code></strong>=<em><code>None</code></em>) :: <a href="/shadowsunspec/factory.html#GeneralSunspecEncoder"><code>GeneralSunspecEncoder</code></a></p>
+</blockquote>
+<p>Recursively json encodes a sunspec model into a shadow-sunspec compliant object
+Note that if the top level object is a list you will not get a index-dir as defined above.</p>
+<p>This class returns an example dictionary.  It is made for communication purposes.
+It contains the datatype as the value instead of the actual modbus or canbus data.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">([{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">802</span><span class="p">}])</span>
+<span class="n">telem</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">TelemetrySunspecEncoder</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">TESTCASE</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">telem</span><span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">][</span><span class="s1">&#39;fixed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="mi">38</span><span class="p">)</span>
+
+<span class="n">shadow</span> <span class="o">=</span> <span class="n">encode</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">ShadowSunspecEncoder</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">TESTCASE</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shadow</span><span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">][</span><span class="s1">&#39;fixed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 

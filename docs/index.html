@@ -54,6 +54,25 @@ nb_path: "nbs/index.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This repo depends on <a href="https://github.com/sunspec/pysunspec">pysunspec</a>.  If you want to be able to run the examples you need all the submodules.  Make sure to clone with the <code>--recursive</code> flag.</p>
 
+<pre><code>git clone --recurse-submodules &lt;repository url&gt;</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="How-to-run-these-examples">How to run these examples<a class="anchor-link" href="#How-to-run-these-examples"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can run these examples yourself, or build your own models in python.  After you clone the repository:</p>
+
+<pre><code>make env
+make server</code></pre>
+<p>will start a jupyter lab server with this package installed.</p>
+
 </div>
 </div>
 </div>
@@ -128,28 +147,28 @@ nb_path: "nbs/index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For example, the shadow</p>
-<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">98</span>
-        <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">98</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>could be updated with</p>
-<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">97</span>
-        <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">97</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>and the result is</p>
-<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">97</span>
-        <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">97</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Everything in <code>cells.0</code> is unchanged.  Only <code>cells.1</code> is changed.</p>
 
@@ -159,15 +178,15 @@ nb_path: "nbs/index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>However if the device shadow instead was</p>
-<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="p">{</span>
-          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">99</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-          <span class="nt">&quot;soc&quot;</span><span class="p">:</span> <span class="mi">98</span>
-        <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="nt">&quot;cells&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;soc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">98</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>we would have to send the information in <code>cells</code> because the entire value of the <code>cells</code> is overwritten with each update.  If this cells array were long and each entry had many points, this represents a lot of extra data.</p>
 
@@ -272,34 +291,48 @@ nb_path: "nbs/index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
-    <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="err">&lt;Model&gt;</span><span class="p">,</span>
-    <span class="err">&lt;...&gt;</span><span class="p">,</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;Model&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;Model&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="err">&lt;...&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>A <code>Model</code> is made up of one or more point groups.  There will always be a fixed point group.  There will then be zero or more repeating point groups.  We can serialize a <code>Model</code> as</p>
-<div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="err">Model</span> <span class="err">ID</span> <span class="kc">nu</span><span class="err">mber</span><span class="p">,</span>
-    <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
-                <span class="err">&lt;...&gt;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> 
-            <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
-                <span class="err">&lt;...&gt;</span>
-               <span class="p">},</span>
-            <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span><span class="p">,</span>
-               <span class="err">Poi</span><span class="kc">nt</span> <span class="kc">na</span><span class="err">me</span><span class="p">:</span> <span class="err">value</span>
-                <span class="err">&lt;...&gt;</span>
-               <span class="p">},</span>
-            <span class="err">&lt;...&gt;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Model</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="kc">nu</span><span class="err">mber</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="w"></span>
+<span class="w">                </span><span class="err">&lt;...&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;repeating&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="w"></span>
+<span class="w">                </span><span class="err">&lt;...&gt;</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="err">Poi</span><span class="kc">nt</span><span class="w"> </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">value</span><span class="w"></span>
+<span class="w">                </span><span class="err">&lt;...&gt;</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="err">&lt;...&gt;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Read-only-vs.-Writable-points">Read only vs. Writable points<a class="anchor-link" href="#Read-only-vs.-Writable-points"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Because of technical limitations with the shadow, we'll separate out the writable and read only points. The max size of a given named shadow is only 30k (and that's only if you ask AWS for an extension).  Also the update chunk size is only 1k, and updating shadows is more expensive than publishing a normal MQTT message.</p>
+<p>By keeping the writable points in the shadow we can still make use of the powerful state tracking and "desired" shadow features of the IOT Shadow, but only where they are needed.</p>
 
 </div>
 </div>
@@ -360,77 +393,78 @@ nb_path: "nbs/index.ipynb"
 </table>
 <p>The cells are a repeating point group within the module model.  For brevity sake we'll only cover a subset of the points.</p>
 <p>In this case we only need model <code>802</code> to cover the whole bank, and we need one model <code>805</code> for each module.  The other models are redundant and will not be included.</p>
+<p>We'll consider a few read-only points.  The telemetry model then becomes.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">802</span><span class="p">,</span>
-      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;AHRtg&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">97</span><span class="p">,</span>
-        <span class="nt">&quot;ChaSt&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="nt">&quot;ReqW&quot;</span><span class="p">:</span> <span class="mi">-300</span>
-      <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span>
-      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">98</span><span class="p">,</span>
-        <span class="nt">&quot;NCell&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="nt">&quot;SN&quot;</span><span class="p">:</span> <span class="s2">&quot;ABC123&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span>
-      <span class="nt">&quot;fixed&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="nt">&quot;SoC&quot;</span><span class="p">:</span> <span class="mi">96</span><span class="p">,</span>
-        <span class="nt">&quot;NCell&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="nt">&quot;SN&quot;</span><span class="p">:</span> <span class="s2">&quot;ABC124&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;repeating&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;0&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;2&quot;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="nt">&quot;CellV&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-          <span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
-          <span class="nt">&quot;CellSt&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">802</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;AHRtg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;SoC&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">97</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ChaSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ReqW&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-300</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">805</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;SoC&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">98</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;NCell&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;SN&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ABC123&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;repeating&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">805</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;StrIdx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ModIdx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;SoC&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;NCell&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;SN&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ABC124&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;repeating&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellV&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellTmp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;CellSt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 
 </div>
@@ -450,7 +484,7 @@ nb_path: "nbs/index.ipynb"
 <li>803: contains summary level data on the string in the repeating block.  That summary data has the Contactor Status, which is important to Fortress Engineers.</li>
 <li>805: Module and cell level data.</li>
 </ul>
-<p>We can generate the full shadow sunspec along with datatypes.</p>
+<p>We can generate the shadow sunspec along with datatypes.</p>
 
 </div>
 </div>
@@ -464,13 +498,138 @@ nb_path: "nbs/index.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
-<span class="kn">from</span> <span class="nn">shadowsunspec.factory</span> <span class="kn">import</span> <span class="n">assemble</span><span class="p">,</span> <span class="n">ShadowSunspecEncoder</span>
+<span class="kn">from</span> <span class="nn">shadowsunspec.factory</span> <span class="kn">import</span> <span class="n">assemble</span><span class="p">,</span> <span class="n">ShadowSunspecEncoder</span><span class="p">,</span> <span class="n">TelemetrySunspecEncoder</span>
+<span class="kn">import</span> <span class="nn">shadowsunspec.factory</span> <span class="k">as</span> <span class="nn">factory</span>
 <span class="n">example_device</span> <span class="o">=</span> <span class="n">assemble</span><span class="p">([</span>
         <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">802</span><span class="p">},</span> 
         <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">803</span><span class="p">},</span>
         <span class="p">{</span><span class="s1">&#39;mid&#39;</span><span class="p">:</span> <span class="mi">805</span><span class="p">,</span> <span class="s1">&#39;repeating&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">}])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">example_device</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ShadowSunspecEncoder</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1">#dumped_shadow = (json.dumps(example_device, cls=ShadowSunspecEncoder, indent=2))</span>
+<span class="n">dumped_shadow</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">example_device</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">ShadowSunspecEncoder</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dumped_shadow</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+  &#34;0&#34;: {
+    &#34;fixed&#34;: {
+      &#34;SocRsvMax&#34;: &#34;uint16&#34;,
+      &#34;SoCRsvMin&#34;: &#34;uint16&#34;,
+      &#34;CtrlHb&#34;: &#34;uint16&#34;,
+      &#34;AlmRst&#34;: &#34;uint16&#34;,
+      &#34;SetOp&#34;: &#34;enum16&#34;,
+      &#34;SetInvState&#34;: &#34;enum16&#34;
+    },
+    &#34;id&#34;: 802
+  },
+  &#34;1&#34;: {
+    &#34;fixed&#34;: {},
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {
+        &#34;StrSetEna&#34;: &#34;enum16&#34;,
+        &#34;StrSetCon&#34;: &#34;enum16&#34;
+      }
+    },
+    &#34;id&#34;: 803
+  },
+  &#34;2&#34;: {
+    &#34;fixed&#34;: {},
+    &#34;repeating&#34;: {
+      &#34;0&#34;: {},
+      &#34;1&#34;: {},
+      &#34;2&#34;: {},
+      &#34;3&#34;: {},
+      &#34;4&#34;: {},
+      &#34;5&#34;: {},
+      &#34;6&#34;: {},
+      &#34;7&#34;: {},
+      &#34;8&#34;: {},
+      &#34;9&#34;: {},
+      &#34;10&#34;: {},
+      &#34;11&#34;: {},
+      &#34;12&#34;: {},
+      &#34;13&#34;: {},
+      &#34;14&#34;: {},
+      &#34;15&#34;: {}
+    },
+    &#34;id&#34;: 805
+  }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This shadow does not take up much space relative to the 30k limit.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shadow is&quot;</span><span class="p">,</span> <span class="n">getsizeof</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dumped_shadow</span><span class="p">),</span> <span class="s2">&quot;bytes&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Shadow is 503
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The points needed for telemetry are</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dumped_telem</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">example_device</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">TelemetrySunspecEncoder</span><span class="p">,</span> <span class="n">as_obj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dumped_telem</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -493,8 +652,6 @@ nb_path: "nbs/index.ipynb"
       &#34;DisChaRte&#34;: &#34;uint16&#34;,
       &#34;SoCMax&#34;: &#34;uint16&#34;,
       &#34;SoCMin&#34;: &#34;uint16&#34;,
-      &#34;SocRsvMax&#34;: &#34;uint16&#34;,
-      &#34;SoCRsvMin&#34;: &#34;uint16&#34;,
       &#34;SoC&#34;: &#34;uint16&#34;,
       &#34;DoD&#34;: &#34;uint16&#34;,
       &#34;SoH&#34;: &#34;uint16&#34;,
@@ -502,8 +659,6 @@ nb_path: "nbs/index.ipynb"
       &#34;ChaSt&#34;: &#34;enum16&#34;,
       &#34;LocRemCtl&#34;: &#34;enum16&#34;,
       &#34;Hb&#34;: &#34;uint16&#34;,
-      &#34;CtrlHb&#34;: &#34;uint16&#34;,
-      &#34;AlmRst&#34;: &#34;uint16&#34;,
       &#34;Typ&#34;: &#34;enum16&#34;,
       &#34;State&#34;: &#34;enum16&#34;,
       &#34;StateVnd&#34;: &#34;enum16&#34;,
@@ -527,9 +682,7 @@ nb_path: "nbs/index.ipynb"
       &#34;ADisChaMax&#34;: &#34;uint16&#34;,
       &#34;W&#34;: &#34;int16&#34;,
       &#34;ReqInvState&#34;: &#34;enum16&#34;,
-      &#34;ReqW&#34;: &#34;int16&#34;,
-      &#34;SetOp&#34;: &#34;enum16&#34;,
-      &#34;SetInvState&#34;: &#34;enum16&#34;
+      &#34;ReqW&#34;: &#34;int16&#34;
     },
     &#34;id&#34;: 802
   },
@@ -579,9 +732,7 @@ nb_path: "nbs/index.ipynb"
         &#34;StrEvt1&#34;: &#34;bitfield32&#34;,
         &#34;StrEvt2&#34;: &#34;bitfield32&#34;,
         &#34;StrEvtVnd1&#34;: &#34;bitfield32&#34;,
-        &#34;StrEvtVnd2&#34;: &#34;bitfield32&#34;,
-        &#34;StrSetEna&#34;: &#34;enum16&#34;,
-        &#34;StrSetCon&#34;: &#34;enum16&#34;
+        &#34;StrEvtVnd2&#34;: &#34;bitfield32&#34;
       }
     },
     &#34;id&#34;: 803
@@ -704,6 +855,44 @@ nb_path: "nbs/index.ipynb"
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Telemetry is&quot;</span><span class="p">,</span> <span class="n">getsizeof</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dumped_telem</span><span class="p">)),</span> <span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Telemetry is 3501 bytes
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example-using-numbers-instead-of-data-types">Example using numbers instead of data types<a class="anchor-link" href="#Example-using-numbers-instead-of-data-types"> </a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If you want to see some example values instead you can do the following.  Note that <a href="https://github.com/sunspec/pysunspec/blob/master/sunspec/core/suns.py">data points that are not "Mandatory" will use these values to show that they are unimplemented.  </a>.  In this example, we will show dummy data in the following points (written as <code>model_id.symbol</code>).</p>
