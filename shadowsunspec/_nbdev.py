@@ -17,7 +17,11 @@ index = {"unhex": "defaults.ipynb",
          "ShadowSunspecValueEncoder": "values.ipynb",
          "example_device": "values.ipynb",
          "ev": "values.ipynb",
-         "example_values": "values.ipynb"}
+         "example_values": "values.ipynb",
+         "READONLY": "factory.ipynb",
+         "WRITEABLE": "factory.ipynb",
+         "GeneralSunspecEncoder": "factory.ipynb",
+         "TelemetrySunspecEncoder": "factory.ipynb"}
 
 modules = ["defaults.py",
            "factory.py",
